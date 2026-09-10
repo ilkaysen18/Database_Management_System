@@ -39,7 +39,12 @@ CREATE TABLE "User_Profile" (
 -- ============================================
 
 CREATE TABLE "Accommodation_Listing" (
-  "Property_ID" INT GENERATED ALWAYS AS IDENTITY
+  "Property_ID" INT GENERATED ALWAYS AS IDENTITY,
+  "User_ID" INT NOT NULL,
+  "Accommodation_Address" VARCHAR(255) NOT NULL,
+  "Accommodation_Type" VARCHAR(50) NOT NULL, -- "Apartment" or "Bedroom"
+  "Accommodation_Description" TEXT,
+  "Max_Guests" INT NOT NULL DEFAULT 1,
 
 
 
