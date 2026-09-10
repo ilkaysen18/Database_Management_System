@@ -16,3 +16,6 @@
   - Can be used for Primary Keys
 * ON DELETE CASCADE automatically handles data cleanup when records are deleted from Parent Tables
   - When Parent record (PK) is deleted, system deletes corresponding Child records (FK)
+* DEFAULT value ensures system sets a record as the default if missing ( Max_Guests DEFAULT 1 )
+* CHECK constraint rejects system from accepting a value above (>) or below (<) the predefined value
+  - (CHECK (Max_Guests > 0))
