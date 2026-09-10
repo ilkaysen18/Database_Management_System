@@ -13,5 +13,6 @@
 * UNIQUE instructs database to reject duplicate entries ( User_Email UNIQUE )
 * GENERATED ALWAYS AS IDENTITY automatically adds new entries ( 1 . . n ) and rejects manual entry
   - ( User_ID GENERATED ALWAYS AS IDENTITY ) - ensures data safety and prevents duplicate records
+  - Can be used for Primary Keys
 * ON DELETE CASCADE automatically handles data cleanup when records are deleted from Parent Tables
   - When Parent record (PK) is deleted, system deletes corresponding Child records (FK)
