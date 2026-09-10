@@ -1,5 +1,5 @@
 -- ============================================
---      1. BASE / INDEPENDENT ENTITIES
+--      1. BASE (INDEPENDENT) ENTITIES
 -- ============================================
 
 -- Create main "User" Entity Table 
@@ -32,6 +32,28 @@ CREATE TABLE "User_Profile" (
   CONSTRAINT "FK_User_Profile_User" FOREIGN KEY ("User_ID")
     REFERENCES "User" ("User_ID")
     ON DELETE CASCADE 
+);
+
+-- ============================================
+--             3. CORE ENTITIES
+-- ============================================
+
+CREATE TABLE "Accommodation_Listing" (
+  "Property_ID" INT GENERATED ALWAYS AS IDENTITY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
