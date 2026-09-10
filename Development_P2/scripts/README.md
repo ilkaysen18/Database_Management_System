@@ -1,3 +1,2 @@
 # ERM to PostgreSQL
-## ERM
-* ERM
+* ERM Entity becomes a database table ( CREATE TABLE table_name )
