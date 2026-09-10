@@ -65,9 +65,19 @@ CREATE TABLE "Accommodation_Listing" (
 CREATE TABLE "Experience_Listing" (
   "Experience_Listing_ID" INT GENERATED ALWAYS AS IDENTITY,
   "User_ID" INT NOT NULL,
-  "Experience_Price" VALUE NOT NULL,
-  -- NEXT add some currency constraints and other constraints
+  "Experience_Price" DECIMAL(20,80) NOT NULL,
+  "Currency_Code" VARCHAR(3) NOT NULL DEFAULT 'EUR', 
 
+  -- Primary Key (PK) Constraint
+  CONSTRAINT "PK_Experience_Listing" PRIMARY KEY ("Experience_Listing_ID"),
+
+  -- Foreign Key (FK) referencing Primary Key (PK)
+  CONSTRAINT "FK_Experience_Listing_User" FOREIGN KEY ("User_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+
+  
+  
 
 
 
