@@ -34,3 +34,7 @@
 
 ### Strategy
 * .....
+
+### SQL Statements
+###### They will generally follow this structure:
+.....
