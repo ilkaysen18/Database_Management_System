@@ -20,7 +20,7 @@
 * CHECK constraint rejects system from accepting a value above (>) or below (<) the predefined value
   - (CHECK (Max_Guests > 0)) - creates a data validation rule
 *  Domain Rules can prevent an entity from being recorded without at least 1 attribute attached
-  - 1234
+- 1234
 
   - llll
 
