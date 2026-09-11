@@ -30,9 +30,7 @@
   - e.g. **CONSTRAINT** "CK_Financial_Transaction_Source_Present" **CHECK** ( ("x" **IS NOT NULL AND** "y" **IS NULL**) **OR** ("x" **IS NULL AND** "y" **IS NOT NULL**)
 * (Structural) Domain Rules can ensure users cannot connect/link with their own account (recursively) - for an Airbnb use-case
   - CONSTRAINT "CK_No_Self_Connection" CHECK ("User_ID" <> "Connection_ID") -- This Inequality Operator ( <> ) is a Self-Loop Blocking CHECK Constraint
-* <img width="1535" height="240" alt="image" src="https://github.com/user-attachments/assets/5cda7089-376d-4856-aac1-c801818b792b" />
-<img width="957" height="180" alt="image" src="https://github.com/user-attachments/assets/72efbb59-32f8-4a0a-9a12-b74ff4d9011f" />
-
+* <img width="857" height="80" alt="image" src="https://github.com/user-attachments/assets/72efbb59-32f8-4a0a-9a12-b74ff4d9011f" />
   - ....
 
 # 02_dummy_data.sql
