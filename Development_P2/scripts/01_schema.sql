@@ -186,7 +186,7 @@ CREATE TABLE "Accommodation_Booking" (
 
   -- Domain Rule: Standardizes Booking_Status options as a Validation CHECK Constraint
   CONSTRAINT "CK_Booking_Status_Valid" CHECK (
-    "Booking_Status" IN ('Pending', 'Confirmed', 'Cancelled', 'Accepted', 'Rejected')
+    "Booking_Status" IN ('Pending', 'Confirmed', 'Canceled', 'Accepted', 'Rejected')
   )
 );
 
@@ -195,7 +195,29 @@ CREATE TABLE "Accommodation_Booking" (
 -- ============================================
 
 CREATE TABLE "Experience_Booking" (
-  
+  "Experience_Booking_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Experience_Listing_ID" INT NOT NULL, -- FK
+  "Guest_ID" INT NOT NULL, -- Links to User_ID, FK
+  "Experience_Calendar_ID" INT NOT NULL, -- FK
+  "Notification_ID" INT, -- Tracks notifications, OFK
+  "Exp_Booking_Status" VARCHAR(20) NOT NULL DEFAULT 'Pending',
+
+  -- PK Constraint
+  CONSTRAINT "PK_Experience_Booking" PRIMARY KEY ("Exp_Booking_ID"),
+
+  -- FK referencing Experience_Listing 
+  CONSTRAINT "FK_Exp_Booking_Listing" FOREIGN KEY ("Experience_Listing_ID")
+        REFERENCES "Experience_Listing" ("Experience_Listing_ID")
+        ON DELETE CASCADE,
+  -- FK referencing User
+  CONSTRAINT "FK_Exp_Booking_Guest" FOREIGN KEY ("Guest_ID")
+        REFERENCES "User" ("User_ID")
+        ON DELETE CASCADE,
+
+  -- Domain Rule: Standardizes Exp_Booking_Status options as a Validation CHECK Constraint
+   CONSTRAINT "CK_Exp_Booking_Status_Valid" CHECK (
+        "Exp_Booking_Status" IN ('Pending', 'Confirmed', 'Canceled', 'Accepted', 'Rejected')
+  )
 );
 
 -- ============================================
@@ -203,6 +225,19 @@ CREATE TABLE "Experience_Booking" (
 -- ============================================
 
 CREATE TABLE "Financial_Transaction" (
+  "Transaction_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Booking_ID" INT, -- references stays, OFK
+  "Exp_Booking_ID" INT, -- references tours (experiences), OFK
+
+  -- PK Constraint
+
+  -- OFK referencing 
+
+  -- OFK referencing 
+
+  -- Domain Rule: Prevents transaction from processing without at least 1 service, e.g. either Booking_ID or Exp_Booking_ID, depending on service booked by Guest
+
+
   
 );
 
