@@ -261,28 +261,47 @@ CREATE TABLE "Host_Payout" (
   CONSTRAINT "PK_Host_Payout" PRIMARY KEY ("Host_Payout_ID"),
 
   -- FK referencing "Financial_Transaction" Table's ("Transaction_ID") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
+  CONSTRAINT "FK_Host_Payout_Transaction" FOREIGN KEY ("Transaction_ID")
     REFERENCES "Financial_Transaction" ("Transaction_ID")
     ON DELETE CASCADE,
-  -- FK referencing "" Table's ("") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  
+  -- FK referencing Host (User)
+  CONSTRAINT "FK_Host_Payout_Host" FOREIGN KEY ("Host_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
-  
-  -- Domain Rule: 
-  CONSTRAINT "CK_" CHECK
-  
+  -- Foreign Key referencing Guest (User)
+  CONSTRAINT "FK_Host_Payout_Guest" FOREIGN KEY ("Guest_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE
 );
 
 -- ============================================
 --    11.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
 
+CREATE TABLE "Local_Payout" (
+  "Local_Payout_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Transaction_ID" INT NOT NULL, -- FK
+  "Local_ID" INT NOT NULL, -- Links to User_ID, FK
+  "Guest_ID" INT NOT NULL, -- Links to User_ID, FK
+
+  -- PK Constraint
+  CONSTRAINT "PK_Local_Payout" PRIMARY KEY ("Local_Payout_ID"),
+
+  -- FK referencing "Financial_Transaction" Table's ("Transaction_ID") PK Attribute
+  CONSTRAINT "FK_Local_Payout_Transaction" FOREIGN KEY ("Transaction_ID")
+    REFERENCES "Financial_Transaction" ("Transaction_ID")
+    ON DELETE CASCADE,
+  
+  -- FK referencing Local / Tour Creator (User)
+  CONSTRAINT "FK_Local_Payout_Local" FOREIGN KEY ("Local_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+  -- FK referencing Guest / Tour Booker (User)
+  CONSTRAINT "FK_Local_Payout_Guest" FOREIGN KEY ("Guest_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
 );
-
-
-
-
 
 -- ============================================
 --    12.  TRANSACTIONAL (DEPENDENT) ENTITY
