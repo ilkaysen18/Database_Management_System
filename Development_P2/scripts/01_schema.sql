@@ -226,30 +226,120 @@ CREATE TABLE "Experience_Booking" (
 
 CREATE TABLE "Financial_Transaction" (
   "Transaction_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "Booking_ID" INT, -- references stays, OFK
-  "Exp_Booking_ID" INT, -- references tours (experiences), OFK
+  "Booking_ID" INT, -- references stays, OFK (conditional, see Domain Rule below for this Entity Table)
+  "Exp_Booking_ID" INT, -- references tours (experiences), OFK (conditional, see Domain Rule below for this Entity Table)
 
   -- PK Constraint
-
-  -- OFK referencing 
-
-  -- OFK referencing 
-
-  -- Domain Rule: Prevents transaction from processing without at least 1 service, e.g. either Booking_ID or Exp_Booking_ID, depending on service booked by Guest
-  CONSTRAINT "" CHECK (
-    ("" IS NOT NULL AND "" IS NULL) OR
-    ("" IS NULL AND "" IS NOT NULL)
-
+  CONSTRAINT "PK_Financial_Transaction" PRIMARY KEY ("Transaction_ID"),
   
+  -- OFK referencing 
+  CONSTRAINT "FK_Financial_Transaction_Booking" FOREIGN KEY ("Booking_ID")
+        REFERENCES "Accommodation_Booking" ("Booking_ID")
+        ON DELETE CASCADE,
+  -- OFK referencing 
+  CONSTRAINT "FK_Financial_Transaction_Exp" FOREIGN KEY ("Exp_Booking_ID")
+        REFERENCES "Experience_Booking" ("Exp_Booking_ID")
+        ON DELETE CASCADE,
+  
+  -- Domain Rule for (the above) OFK: Prevents transaction from processing without at least 1 service, e.g. either Booking_ID or Exp_Booking_ID, depending on service booked by Guest
+  CONSTRAINT "CK_Financial_Transaction_Source_Present" CHECK (
+    ("Booking_ID" IS NOT NULL AND "Exp_Booking_ID" IS NULL) OR
+    ("Booking_ID" IS NULL AND "Exp_Booking_ID" IS NOT NULL)
+  )
+);
+
+-- ============================================
+--    10.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  
+  -- Domain Rule: 
+  CONSTRAINT "CK_" CHECK
+  
+);
+
+-- ============================================
+--    11.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+
 );
 
 
 
 
 
-
-
-
+-- ============================================
+--    12.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    13.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    14.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    15.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    16.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    17.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    18.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    19.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    20.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    21.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    22.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    23.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    24.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    25.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    26.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    27.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    28.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    29.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+-- ============================================
+--    30.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
 
 
 
