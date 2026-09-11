@@ -1,3 +1,5 @@
+# 01_schema.sql
+
 ### ERM to PostgreSQL
 * ERM Entity becomes database table ( CREATE TABLE table_name )
 * ERM Attribute becomes database entry/column
