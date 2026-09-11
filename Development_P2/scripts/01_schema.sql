@@ -154,6 +154,59 @@ CREATE TABLE "Images" (
 --    7.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
 
+CREATE TABLE "Accommodation_Booking" (
+  "Booking_ID" INT GENERATED ALWAYS AS IDENTITY,
+  "Guest_ID" INT NOT NULL, -- Links to User_ID of guest, FK
+  "Host_ID" INT NOT NULL, -- Links to User_ID of host, new data attribute, FK
+  "Property_ID" INT NOT NULL, -- FK
+  "Property_Calendar_ID" INT NOT NULL, -- FK
+  "Notification_ID" INT, -- OFK for tracking system notifications sent to Users
+  "CI_CO_Date" TIMESTAMP NOT NULL, -- Check-In / Check-Out date tracking
+  "Booking_Status" VARCHAR(20) NOT NULL DEFAULT 'Pending', 
+
+  -- Define PK Constraint
+  CONSTRAINT "PK_Accommodation_Booking" PRIMARY KEY ("Booking_ID"),
+
+  -- FK (Guest) references User
+  CONSTRAINT "FK_Booking_Guest" FOREIGN KEY ("Guest_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+  -- FK (Host) references User
+  CONSTRAINT "FK_Booking_Host" FOREIGN KEY ("Host_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+  -- FK (Property_ID) referencing PK Entity Table (Accommodation_Listing)
+  CONSTRAINT "FK_Booking_Property" FOREIGN KEY ("Property_ID")
+    REFERENCES "Accommodation_Listing" ("Property_ID")
+    ON DELETE CASCADE,
+  -- OFK (Notification_ID) referencing its relevant Entity Table
+  CONSTRAINT "FK_Notifications_Booking" FOREIGN KEY ("Notification_ID")
+    REFERENCES "Notifications" ("Notification_ID")
+    ON DELETE CASCADE,
+
+  -- Domain Rule: Standardizes Booking_Status options as a Validation CHECK Constraint
+  CONSTRAINT "CK_Booking_Status_Valid" CHECK (
+    "Booking_Status" IN ('Pending', 'Confirmed', 'Cancelled', 'Accepted', 'Rejected')
+  )
+);
+
+-- ============================================
+--    8.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+
+CREATE TABLE "Experience_Booking" (
+  
+);
+
+-- ============================================
+--    9.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+
+CREATE TABLE "Financial_Transaction" (
+  
+);
+
+
 
 
 
