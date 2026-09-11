@@ -21,7 +21,8 @@
   - (CHECK (Max_Guests > 0)) - creates a data validation rule
 *  Domain Rules can prevent an entity from being recorded without at least 1 attribute attached
   - 1234
-
+○ iii
+◦ iii
   - llll
 
 - e.g. For the Entity Financial_Transaction, either Booking_ID **_or_** Exp_Booking_ID must be attached, depending on the service booked by the Guest
