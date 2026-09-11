@@ -44,7 +44,7 @@
 ###### Database Normalization & First Normal Form (1NF) Rules:
 <img width="521" height="202" alt="image" src="https://github.com/user-attachments/assets/d7a09519-e70b-4969-8265-5a54ac684e9d" />
 
-* The last Attribute - Default_Payment_Option - since Users may want to add more than one Payment_Option
+* The last Attribute in the block ( Default_Payment_Option ) exists as Users may want to add more than one Payment_Option
   - Default_Payment_Option will require a Boolean operator (true or false) as the data type
 * The DEFAULT Boolean option is FALSE (rather than TRUE); this allows User's first added Payment_Option to be their Default_Payment_Option
   - This maintains Database Normalization & 1NF Rules - so users can add multiple Payment_Options without there having to be separate data rows in the Entity Table for the same Attribute (such as: Payment_Option_1, Payment_Option_2, . . . , Payment_Option_n).
