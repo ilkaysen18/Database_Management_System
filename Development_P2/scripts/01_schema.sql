@@ -236,7 +236,9 @@ CREATE TABLE "Financial_Transaction" (
   -- OFK referencing 
 
   -- Domain Rule: Prevents transaction from processing without at least 1 service, e.g. either Booking_ID or Exp_Booking_ID, depending on service booked by Guest
-
+  CONSTRAINT "" CHECK (
+    ("" IS NOT NULL AND "" IS NULL) OR
+    ("" IS NULL AND "" IS NOT NULL)
 
   
 );
