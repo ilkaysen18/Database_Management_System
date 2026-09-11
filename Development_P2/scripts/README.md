@@ -25,10 +25,11 @@
 * DEFAULT value ensures system sets a record as the default if missing ( Max_Guests DEFAULT 1 )
 * CHECK constraint rejects system from accepting a value above (>) or below (<) the predefined value
   - (CHECK (Max_Guests > 0)) - creates a data validation rule
-*  Domain Rules can prevent an entity from being recorded without at least 1 attribute attached
-* Domain Rules can prevent an entity from being recorded without at least 1 attribute attached
+* (Business) Domain Rules can prevent an entity from being recorded without at least 1 attribute attached
   - e.g. For the Entity Financial_Transaction - either Booking_ID or Exp_Booking_ID must be attached depending on service booked by Guest
   - e.g. **CONSTRAINT** "CK_Financial_Transaction_Source_Present" **CHECK** ( ("x" **IS NOT NULL AND** "y" **IS NULL**) **OR** ("x" **IS NULL AND** "y" **IS NOT NULL**)
+* (Structural) Domain Rules can ensure users cannot connect/link with their own account (recursively) - for an Airbnb use-case
+  - CONSTRAINT "CK_No_Self_Connection" CHECK ("User_ID" <> "Connection_ID") -- This Inequality Operator ( <> ) is a Self-Loop Blocking CHECK Constraint
 
 # 02_dummy_data.sql
 
