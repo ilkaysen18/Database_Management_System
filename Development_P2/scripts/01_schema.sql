@@ -368,25 +368,22 @@ CREATE TABLE "Social_Media_Connection" (
 -- ============================================
 
 CREATE TABLE "Payment_Method" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+  "Payment_Method_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "User_ID" INT NOT NULL, -- FK
+  "Payment_Option" VARCHAR(50) NOT NULL DEFAULT 'Credit Card', -- e.g., Credit Card or PayPal, also a new attribute
+  "Encrypted_Payment_Token" VARCHAR(512) NOT NULL, -- For payment security, also new attribute
+  "Billing_Address" VARCHAR(255), -- new attribute 
+  "Default_Payment_Option" BOOLEAN NOT NULL DEFAULT FALSE, -- new attribute
+  -- The Default_Payment_Option attribute will require a Boolean operator (true or false) as the data type, in case users add more than one payment option 
+  -- The DEFAULT Boolean option is FALSE (rather than TRUE); this allows user's first added Payment_Option to be their Default_Payment_Option. This maintains Database Normalization & First Normal Form (1NF) Rules - so users can add multiple Payment_Options without there having to be separate data rows in the Entity Table for the same Attribute (such as: Payment_Option_1, Payment_Option_2, . . . , Payment_Option_n).
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Payment_Method" PRIMARY KEY ("Payment_Method_ID"),
 
-  -- FK referencing "" Table's ("") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  -- FK referencing "User" Table's ("User_ID") PK Attribute
+  CONSTRAINT "FK_Payment_Method_User" FOREIGN KEY ("User_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
-  -- FK referencing "" Table's ("") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
 );
 
 -- ============================================
