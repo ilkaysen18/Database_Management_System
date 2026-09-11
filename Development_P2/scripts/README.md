@@ -24,5 +24,5 @@
 # 1243
 
 * Domain Rules can prevent an entity from being recorded without at least 1 attribute attached
-  - e.g. For the Entity Financial_Transaction, either Booking_ID **_or_** Exp_Booking_ID must be attached, depending on the service booked by the Guest
+  - e.g. For the Entity Financial_Transaction - either Booking_ID or Exp_Booking_ID must be attached depending on service booked by Guest
   - **CONSTRAINT** "CK_Financial_Transaction_Source_Present" **CHECK** ( ("x" **IS NOT NULL AND** "y" **IS NULL**) **OR** ("x" **IS NULL AND** "y" **IS NOT NULL**)
