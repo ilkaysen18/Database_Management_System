@@ -253,18 +253,18 @@ CREATE TABLE "Financial_Transaction" (
 -- ============================================
 CREATE TABLE "Host_Payout" (
   "Host_Payout_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" , -- FK
-  "" , -- FK
+  "Transaction_ID" INT NOT NULL, -- FK
+  "Host_ID" INT NOT NULL, -- Links to User_ID, FK
+  "Guest_ID" INT NOT NULL, -- Links to User_ID, FK
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Host_Payout" PRIMARY KEY ("Host_Payout_ID"),
 
-  -- FK referencing
+  -- FK referencing "Financial_Transaction" Table's ("Transaction_ID") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+    REFERENCES "Financial_Transaction" ("Transaction_ID")
     ON DELETE CASCADE,
-  -- FK referencing
+  -- FK referencing "" Table's ("") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
     ON DELETE CASCADE,
@@ -296,11 +296,11 @@ CREATE TABLE "" (
   -- PK Constraint
   CONSTRAINT "PK_" PRIMARY KEY (""),
 
-  -- FK referencing
+  -- FK referencing "" Table's ("") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
     ON DELETE CASCADE,
-  -- FK referencing
+  -- FK referencing "" Table's ("") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
     ON DELETE CASCADE,
@@ -322,11 +322,11 @@ CREATE TABLE "" (
   -- PK Constraint
   CONSTRAINT "PK_" PRIMARY KEY (""),
 
-  -- FK referencing
+  -- FK referencing "" Table's ("") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
     ON DELETE CASCADE,
-  -- FK referencing
+  -- FK referencing "" Table's ("") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
     ON DELETE CASCADE,
@@ -348,11 +348,11 @@ CREATE TABLE "" (
   -- PK Constraint
   CONSTRAINT "PK_" PRIMARY KEY (""),
 
-  -- FK referencing
+  -- FK referencing "" Table's ("") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
     ON DELETE CASCADE,
-  -- FK referencing
+  -- FK referencing "" Table's ("") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
     ON DELETE CASCADE,
@@ -374,11 +374,11 @@ CREATE TABLE "" (
   -- PK Constraint
   CONSTRAINT "PK_" PRIMARY KEY (""),
 
-  -- FK referencing
+  -- FK referencing "" Table's ("") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
     ON DELETE CASCADE,
-  -- FK referencing
+  -- FK referencing "" Table's ("") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
     ON DELETE CASCADE,
@@ -400,11 +400,11 @@ CREATE TABLE "" (
   -- PK Constraint
   CONSTRAINT "PK_" PRIMARY KEY (""),
 
-  -- FK referencing
+  -- FK referencing "" Table's ("") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
     ON DELETE CASCADE,
-  -- FK referencing
+  -- FK referencing "" Table's ("") PK Attribute
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
     ON DELETE CASCADE,
