@@ -10,28 +10,8 @@
 
 # SQL Statements
 _They will generally follow this structure:_
+<img width="417" height="477" alt="image" src="https://github.com/user-attachments/assets/eabdd12c-9f82-417e-b272-5c09542f1435" />
 
-CREATE TABLE "" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
-
-  -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
-
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
-  
-  -- Domain Rule: 
-  CONSTRAINT "CK_" CHECK
-  
-);
 
 # PostgreSQL Constraints
 * NOT NULL forces database reject NULL entries ( Password_Hash NOT NULL )
