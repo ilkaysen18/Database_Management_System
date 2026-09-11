@@ -2,6 +2,6 @@
 [DBMS](https://github.com/ilkaysen18/Database_Management_System)
 
 ### Navigation:
-* For SQL Statements, visit: [01_schema.sql](Development_P2/scripts/01_schema.sql)
-* For Dummy Data, visit [02_dummy_data.sql](Development_P2/scripts/02_dummy_data.sql)
-* For Test Cases, visit [03_queries.sql](Development_P2/test_cases/03_queries.sql)
+* For SQL Statements, see: [01_schema.sql](Development_P2/scripts/01_schema.sql)
+* For Dummy Data, see: [02_dummy_data.sql](Development_P2/scripts/02_dummy_data.sql)
+* For Test Cases, see: [03_queries.sql](Development_P2/test_cases/03_queries.sql)
