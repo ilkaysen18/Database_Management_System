@@ -251,10 +251,11 @@ CREATE TABLE "Financial_Transaction" (
 -- ============================================
 --    10.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
-CREATE TABLE "" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
+CREATE TABLE "Host_Payout" (
+  "Host_Payout_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
-  "" ,
+  "" , -- FK
+  "" , -- FK
 
   -- PK Constraint
   CONSTRAINT "PK_" PRIMARY KEY (""),
@@ -286,60 +287,495 @@ CREATE TABLE "" (
 -- ============================================
 --    12.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    13.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    14.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    15.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    16.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    17.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    18.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    19.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    20.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    21.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    22.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    23.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    24.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    25.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    26.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    27.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    28.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    29.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
+
 -- ============================================
 --    30.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
 
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule:
+  CONSTRAINT "CK_" CHECK
+ 
+);
 
 
