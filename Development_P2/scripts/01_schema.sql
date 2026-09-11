@@ -304,10 +304,66 @@ CREATE TABLE "Local_Payout" (
 );
 
 -- ============================================
---    12.  TRANSACTIONAL (DEPENDENT) ENTITY
+--  12. ACCOUNT & SECURITY (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Verification" (
+  "Verification_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "User_ID" INT NOT NULL, -- FK
+  "Email_Verification_Status" VARCHAR(50) NOT NULL DEFAULT 'Unverified',
+  "Phone_Verification_Status" VARCHAR(50) NOT NULL DEFAULT 'Unverified',
+  "ID_Verification_Status" VARCHAR(50) NOT NULL DEFAULT 'Not Retained',
+
+  -- PK Constraint
+  CONSTRAINT "PK_Verification" PRIMARY KEY ("Verification_ID"),
+
+  -- FK referencing "User" Table's ("User_ID") PK Attribute
+  CONSTRAINT "FK_Verification_User" FOREIGN KEY ("User_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule: Standardizes auditing/verification status
+  CONSTRAINT "CK_Email_Status_Valid" CHECK (
+    "Email_Verification_Status" IN ('Verified', 'Unverified')
+    ),
+  CONSTRAINT "CK_Phone_Status_Valid" CHECK (
+    "Phone_Verification_Status" IN ('Verified', 'Unverified')
+    ),
+  CONSTRAINT "CK_ID_Status_Valid" CHECK (
+    "ID_Verification_Status" IN ('Verified', 'Not Retained')
+    )
+);
+
+-- ============================================
+--    13. ACCOUNT & TRUST (DEPENDENT) ENTITY
+-- ============================================
+
+CREATE TABLE "Social_Media_Connection" (
+  "SMP_Token" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "User_ID" INT NOT NULL, -- Points to user's own User_ID, FK
+  "Connection_ID" INT NOT NULL, -- Points to user's Social Media Platform (SMP) Connection's User_ID, FK
+
+  -- PK Constraint
+  CONSTRAINT "PK_Social_Media_Connection" PRIMARY KEY ("SMP_Token"),
+
+  -- FK referencing "User" Table's ("User_ID") PK Attribute, for the Source (Original) User connecting
+  CONSTRAINT "FK_SMP_Source_User" FOREIGN KEY ("User_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+  -- FK referencing "User" Table's ("User_ID") PK Attribute, for the Target Peer (the User's Connection)
+  CONSTRAINT "FK_SMP_Target_Peer" FOREIGN KEY ("Connection_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule (Structural): Users cannot connect/link with their own account (recursively)
+  CONSTRAINT "CK_No_Self_Connection" CHECK ("User_ID" <> "Connection_ID") -- This Inequality Operator ( <> ) is a Self-Loop Blocking CHECK Constraint
+);
+
+-- ============================================
+-- 14. ACCOUNT & INTEGRATION (DEPENDENT) ENTITY
+-- ============================================
+
+CREATE TABLE "Payment_Method" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -330,10 +386,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    13.  TRANSACTIONAL (DEPENDENT) ENTITY
+--    15.  COMMUNICATION (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Message_Thread" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -356,10 +412,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    14.  TRANSACTIONAL (DEPENDENT) ENTITY
+--    16.  COMMUNICATION (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Message_Log" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -382,62 +438,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    15.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- 17. ACCOUNT & INTEGRATION (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
-
-  -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
-
-  -- FK referencing "" Table's ("") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
-  -- FK referencing "" Table's ("") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
-);
-
--- ============================================
---    16.  TRANSACTIONAL (DEPENDENT) ENTITY
--- ============================================
-
-CREATE TABLE "" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
-
-  -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
-
-  -- FK referencing "" Table's ("") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
-  -- FK referencing "" Table's ("") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
-);
-
--- ============================================
---    17.  TRANSACTIONAL (DEPENDENT) ENTITY
--- ============================================
-
-CREATE TABLE "" (
+CREATE TABLE "Notification" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -460,10 +464,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    18.  TRANSACTIONAL (DEPENDENT) ENTITY
+--     18.  DISCOVERY (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Amenity" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -486,10 +490,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    19.  TRANSACTIONAL (DEPENDENT) ENTITY
+--     19.  SCHEDULING (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Property_Calendar" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -512,10 +516,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    20.  TRANSACTIONAL (DEPENDENT) ENTITY
+--     20.  SCHEDULING (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Experience_Calendar" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -538,10 +542,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    21.  TRANSACTIONAL (DEPENDENT) ENTITY
+--     21.  SCHEDULING (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Property_Block_Dates" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -564,10 +568,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    22.  TRANSACTIONAL (DEPENDENT) ENTITY
+--     22.  SCHEDULING (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Experience_Block_Dates" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -590,10 +594,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    23.  TRANSACTIONAL (DEPENDENT) ENTITY
+--   23. RATING & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Accommodation_Review" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -616,10 +620,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    24.  TRANSACTIONAL (DEPENDENT) ENTITY
+--   24. RATING & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Accommodation_Rating" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -642,10 +646,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    25.  TRANSACTIONAL (DEPENDENT) ENTITY
+--   25. RATING & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "User_Review" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -668,10 +672,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    26.  TRANSACTIONAL (DEPENDENT) ENTITY
+--   26. RATING & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "User_Rating" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -694,10 +698,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    27.  TRANSACTIONAL (DEPENDENT) ENTITY
+--   27. RATING & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Experience_Review" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
@@ -720,10 +724,10 @@ CREATE TABLE "" (
 );
 
 -- ============================================
---    28.  TRANSACTIONAL (DEPENDENT) ENTITY
+--   28. RATING & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
+CREATE TABLE "Experience_Rating" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
