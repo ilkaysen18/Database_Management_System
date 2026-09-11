@@ -22,6 +22,9 @@
 *  Domain Rules can prevent an entity from being recorded without at least 1 attribute attached
   - 1234
 ○ iii
+○
+•
+● ○ ⦿
 ◦ iii
   - llll
 
