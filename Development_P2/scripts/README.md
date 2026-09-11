@@ -49,6 +49,8 @@
 * The DEFAULT Boolean option is FALSE (rather than TRUE); this allows User's first added Payment_Option to be their Default_Payment_Option
   - This maintains Database Normalization & 1NF Rules - so users can add multiple Payment_Options without there having to be separate data rows in the Entity Table for the same Attribute (such as: Payment_Option_1, Payment_Option_2, . . . , Payment_Option_n).
 
+-----------------------------------------------------------------------------------------------------------------------------------
+
 # 02_dummy_data.sql
 
 ### Strategy
