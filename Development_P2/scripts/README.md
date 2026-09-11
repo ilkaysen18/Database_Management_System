@@ -5,8 +5,33 @@
 * Data Keys (PK, FK) become relational constraints (PRIMARY KEY, _references_ parent_table(column) )
 
 # Strategy
-* First add the independent entity tables ( User )
-* Next add the dependent ones ( Accommodation_Listing )
+* First add the independent entity tables ( e.g. User )
+* Next add the dependent ones ( e.g. Accommodation_Listing )
+
+# SQL Statements
+_They will generally follow this structure:_
+
+CREATE TABLE "" (
+  "" GENERATED ALWAYS AS IDENTITY, -- PK
+  "" , -- FK
+  "" ,
+
+  -- PK Constraint
+  CONSTRAINT "PK_" PRIMARY KEY (""),
+
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  -- FK referencing
+  CONSTRAINT "FK_" FOREIGN KEY ("")
+    REFERENCES "" ("")
+    ON DELETE CASCADE,
+  
+  -- Domain Rule: 
+  CONSTRAINT "CK_" CHECK
+  
+);
 
 # PostgreSQL Constraints
 * NOT NULL forces database reject NULL entries ( Password_Hash NOT NULL )
