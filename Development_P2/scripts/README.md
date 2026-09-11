@@ -20,9 +20,6 @@
 * CHECK constraint rejects system from accepting a value above (>) or below (<) the predefined value
   - (CHECK (Max_Guests > 0)) - creates a data validation rule
 *  Domain Rules can prevent an entity from being recorded without at least 1 attribute attached
-
-# 1243
-
 * Domain Rules can prevent an entity from being recorded without at least 1 attribute attached
   - e.g. For the Entity Financial_Transaction - either Booking_ID or Exp_Booking_ID must be attached depending on service booked by Guest
-  - **CONSTRAINT** "CK_Financial_Transaction_Source_Present" **CHECK** ( ("x" **IS NOT NULL AND** "y" **IS NULL**) **OR** ("x" **IS NULL AND** "y" **IS NOT NULL**)
+  - e.g. **CONSTRAINT** "CK_Financial_Transaction_Source_Present" **CHECK** ( ("x" **IS NOT NULL AND** "y" **IS NULL**) **OR** ("x" **IS NULL AND** "y" **IS NOT NULL**)
