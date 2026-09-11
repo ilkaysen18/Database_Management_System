@@ -10,7 +10,7 @@
 
 # SQL Statements
 ###### _They will generally follow this structure:_
-<img width="217" height="277" alt="image" src="https://github.com/user-attachments/assets/eabdd12c-9f82-417e-b272-5c09542f1435" />
+<img width="317" height="377" alt="image" src="https://github.com/user-attachments/assets/eabdd12c-9f82-417e-b272-5c09542f1435" />
 
 
 # PostgreSQL Constraints
