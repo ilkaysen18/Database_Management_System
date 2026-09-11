@@ -31,3 +31,6 @@
   - e.g. **CONSTRAINT** "CK_Financial_Transaction_Source_Present" **CHECK** ( ("x" **IS NOT NULL AND** "y" **IS NULL**) **OR** ("x" **IS NULL AND** "y" **IS NOT NULL**)
 
 # 02_dummy_data.sql
+
+### Strategy
+* .....
