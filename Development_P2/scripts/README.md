@@ -4,16 +4,15 @@
 * Data Dictionary Entry lists PostgreSQL Data Type ( INT, VARCHAR(200), DATETIME, DECIMAL )
 * Data Keys (PK, FK) become relational constraints (PRIMARY KEY, _references_ parent_table(column) )
 
-# Strategy
+### Strategy
 * First add the independent entity tables ( e.g. User )
 * Next add the dependent ones ( e.g. Accommodation_Listing )
 
-# SQL Statements
+### SQL Statements
 ###### _They will generally follow this structure:_
 <img width="317" height="377" alt="image" src="https://github.com/user-attachments/assets/eabdd12c-9f82-417e-b272-5c09542f1435" />
 
-
-# PostgreSQL Constraints
+### PostgreSQL Constraints
 * NOT NULL forces database reject NULL entries ( Password_Hash NOT NULL )
 * UNIQUE instructs database to reject duplicate entries ( User_Email UNIQUE )
 * GENERATED ALWAYS AS IDENTITY automatically adds new entries ( 1 . . n ) and rejects manual entry
