@@ -9,7 +9,7 @@
 * Next add the dependent ones ( e.g. Accommodation_Listing )
 
 # SQL Statements
-##### _They will generally follow this structure:_
+###### _They will generally follow this structure:_
 <img width="417" height="477" alt="image" src="https://github.com/user-attachments/assets/eabdd12c-9f82-417e-b272-5c09542f1435" />
 
 
