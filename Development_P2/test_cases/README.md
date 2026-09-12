@@ -18,5 +18,7 @@
   - ASC
   - DESC
 * ROUND
+###### Aliasing:
+* FROM "Financial_Transaction" ft  -- Fuses 'ft' to Financial_Transaction for this query block
 
 -----------------------------------------------------------------------------------------------------------------------------------
