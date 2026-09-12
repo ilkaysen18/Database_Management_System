@@ -61,7 +61,7 @@
 ###### They will generally follow this structure:
 <img width="632" height="27" alt="image" src="https://github.com/user-attachments/assets/a9ea55f5-5577-4667-900d-eeceb8731037" />
 
-* with the data records below it
+* with the data records right below it
 
 
 -----------------------------------------------------------------------------------------------------------------------------------
