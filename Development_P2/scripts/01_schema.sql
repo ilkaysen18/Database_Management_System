@@ -389,25 +389,35 @@ CREATE TABLE "Payment_Method" (
 -- ============================================
 
 CREATE TABLE "Message_Thread" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+  "Thread_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Booking_ID" INT NOT NULL, -- FK
+  "Thread_Subject" VARCHAR(100),
+  "Thread_Date" TIMESTAMP NOT NULL,
+  "Thread_Status" VARCHAR(20) NOT NULL DEFAULT 'Active', 
+  "Guest_ID" INT NOT NULL, -- FK links to User_ID
+  "Host_ID" INT NOT NULL, -- FK links to User_ID
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Message_Thread" PRIMARY KEY ("Thread_ID"),
 
-  -- FK referencing "" Table's ("") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  -- FK referencing "Accommodation_Booking" Table's ("Booking_ID") PK Attribute
+  CONSTRAINT "FK_Message_Thread_Booking" FOREIGN KEY ("Booking_ID")
+    REFERENCES "Accommodation_Booking" ("Booking_ID")
     ON DELETE CASCADE,
-  -- FK referencing "" Table's ("") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  
+  -- FK referencing "User" Table's ("User_ID") PK Attribute
+  CONSTRAINT "FK_Message_Thread_Guest" FOREIGN KEY ("Guest_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+  -- FK referencing "User" Table's ("User_ID") PK Attribute
+  CONSTRAINT "FK_Message_Thread_Host" FOREIGN KEY ("Host_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
  
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  -- Domain Rule: Standardized / Validation Rules for Thread_Status
+  CONSTRAINT "CK_Thread_Status_Valid" CHECK (
+    "Thread_Status" IN ('Active', 'Archived', 'Deleted')
+  )
 );
 
 -- ============================================
@@ -415,51 +425,63 @@ CREATE TABLE "Message_Thread" (
 -- ============================================
 
 CREATE TABLE "Message_Log" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+  "Msg_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Thread_ID" INT NOT NULL, -- FK from Message_Thread Entity/Table
+  "Sender_ID" INT NOT NULL, -- FK links to User_ID
+  "Receiver_ID" INT NOT NULL, -- FK links to User_ID
+  "Msg_Content" TEXT NOT NULL,
+  "Msg_Timestamp" TIMESTAMP NOT NULL,
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Message_Log" PRIMARY KEY ("Msg_ID"),
 
-  -- FK referencing "" Table's ("") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  -- FK referencing "Message_Thread" Table's ("Thread_ID") PK Attribute
+  CONSTRAINT "FK_Message_Log_Thread" FOREIGN KEY ("Thread_ID")
+    REFERENCES "Message_Thread" ("Thread_ID")
     ON DELETE CASCADE,
-  -- FK referencing "" Table's ("") PK Attribute
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  
+  -- FK referencing "User" Table's ("User_ID") PK Attribute
+  CONSTRAINT "FK_Message_Log_Sender" FOREIGN KEY ("Sender_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+  -- FK referencing "User" Table's ("User_ID") PK Attribute
+  CONSTRAINT "FK_Message_Log_Receiver" FOREIGN KEY ("Receiver_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
  
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  -- Domain Rule (Technical): Prevents user account from sending the messages to itself
+  CONSTRAINT "CK_No_Self_Messaging" CHECK ("Sender_ID" <> "Receiver_ID") -- Inequality Operator ( <> ) as a Self-Loop Blocking CHECK Constraint
 );
 
 -- ============================================
 -- 17. ACCOUNT & INTEGRATION (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "Notification" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+CREATE TABLE "Notifications" (
+  "Notification_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Notification_Type" VARCHAR(50) NOT NULL, -- Context Categories e.g. 'Booking', 'CI', 'Payout'
+  "Message_Body" TEXT NOT NULL,
+  "Is_Read" BOOLEAN NOT NULL DEFAULT FALSE, -- Boolean rule for True or False
+  "User_ID" INT NOT NULL, -- FK links to User_ID
+  "Booking_ID" INT, -- OFK points to Stays
+  "Exp_Booking_ID" INT, -- OFK points to Experiences
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Notifications" PRIMARY KEY ("Notification_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_Notifications_User" FOREIGN KEY ("User_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  
+  -- OFK referencing
+  CONSTRAINT "FK_Notifications_Booking" FOREIGN KEY ("Booking_ID")
+    REFERENCES "Accommodation_Booking" ("Booking_ID")
     ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  -- OFK referencing
+  CONSTRAINT "FK_Notifications_Exp_Booking" FOREIGN KEY ("Exp_Booking_ID")
+    REFERENCES "Experience_Booking" ("Exp_Booking_ID")
+    ON DELETE CASCADE,
 );
 
 -- ============================================
@@ -467,25 +489,34 @@ CREATE TABLE "Notification" (
 -- ============================================
 
 CREATE TABLE "Amenity" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+  "Amenity_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Property_ID" INT NOT NULL, -- FK links to Accommodation_Listing Entity/Table
+  "Amenity_Name" VARCHAR(50) NOT NULL, -- e.g., 'Wi-Fi', 'Pool', 'Kitchen', also a new attribute
+  "Amenity_Description" TEXT, -- new attribute
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Amenity" PRIMARY KEY ("Amenity_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_Amenity_Property" FOREIGN KEY ("Property_ID")
+    REFERENCES "Accommodation_Listing" ("Property_ID")
     ON DELETE CASCADE,
  
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  -- Domain Rule: Standardizes Amenity_Name entries
+  CONSTRAINT "CK__Amenity_Name_Standardized" CHECK (
+    "Amenity_Name" IN (
+      'Free Parking',
+      'Breakfast',
+      'Wi-Fi',
+      'TV',
+      'Air Conditioning',
+      'Heating',
+      'Washing Machine',
+      'Kitchen',
+      'Pool',
+      'Pet-Friendly'
+    )
+  )
 );
 
 -- ============================================
@@ -493,13 +524,18 @@ CREATE TABLE "Amenity" (
 -- ============================================
 
 CREATE TABLE "Property_Calendar" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+  "Property_Calendar_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Property_ID" INT NOT NULL, -- FK from Accommodation_Listing Entity/Table
+  "Prop_Availability_ID" INT NOT NULL, -- FK links to availability blocks
+  "Booking_ID" INT, -- OFK for booking records
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Property_Calendar" PRIMARY KEY ("Property_Calendar_ID"),
 
+  -- FK referencing
+  CONSTRAINT "FK_Prop_Calendar_Listing" FOREIGN KEY ("Property_ID")
+    REFERENCES "Accommodation_Listing" ("Property_ID")
+    ON DELETE CASCADE,
   -- FK referencing
   CONSTRAINT "FK_" FOREIGN KEY ("")
     REFERENCES "" ("")
