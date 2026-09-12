@@ -10,11 +10,12 @@
 * SELECT
   - AS
   - FROM
-* INNER JOIN / LEFT JOIN
+* COALESCE / LEFT JOIN / INNER JOIN
   - ON
-* WHERE
+* WHERE / CASE / WHEN
 * ORDER BY
   - ASC
   - DESC
+* ROUND
 
 -----------------------------------------------------------------------------------------------------------------------------------
