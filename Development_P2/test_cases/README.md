@@ -6,7 +6,7 @@
 * Include 1-3 queries for test cases
 
 ### SQL Statements
-###### They will generally use the following syntax:
+###### They will mostly use the following syntax:
 * SELECT
   - AS
   - FROM
