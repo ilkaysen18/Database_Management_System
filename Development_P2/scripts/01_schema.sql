@@ -519,9 +519,9 @@ CREATE TABLE "Amenity" (
   )
 );
 
--- ============================================
---     19.  SCHEDULING (DEPENDENT) ENTITY
--- ============================================
+-- ====================================================
+--       19.1.  SCHEDULING (DEPENDENT) ENTITY
+-- ====================================================
 
 CREATE TABLE "Property_Calendar" (
   "Property_Calendar_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -535,52 +535,63 @@ CREATE TABLE "Property_Calendar" (
   -- FK referencing
   CONSTRAINT "FK_Prop_Calendar_Listing" FOREIGN KEY ("Property_ID")
     REFERENCES "Accommodation_Listing" ("Property_ID")
-    ON DELETE CASCADE,
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+    ON DELETE CASCADE
+  
+  -- To prevent a Circular Compilation Loop Error in Supabase:
+  -- The other 2 FK Constraints are not added yet, as their PK Tables haven't been CREATE(d) yet;
+  -- They will be added in the next Entity as ALTER TABLE command.
 );
 
 -- ============================================
 --     20.  SCHEDULING (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "Experience_Calendar" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+CREATE TABLE "Property_Block_Dates" (
+  "Prop_Availability_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Property_ID" INT NOT NULL, -- FK
+  "Property_Calendar_ID" INT NOT NULL, -- FK
+  "Blocked_Date" DATE NOT NULL, -- new Attribute added 
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Property_Block_Dates" PRIMARY KEY ("Prop_Availability_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_Prop_Block_Listing" FOREIGN KEY ("Property_ID")
+    REFERENCES "Accommodation_Listing" ("Property_ID")
     ON DELETE CASCADE,
+  
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_Prop_Block_Calendar" FOREIGN KEY ("Property_Calendar_ID")
+    REFERENCES "Property_Calendar" ("Property_Calendar_ID")
     ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
 );
+
+-- ====================================================
+--     19.2.  SAFE RELATIONSHIP CONSTRAINTS LAYER
+-- ====================================================
+
+-- Can now add the remaining 2 FK Constraints (safely with ALTER TABLE) for Entity #19.
+
+-- FK referencing 
+ALTER TABLE "Property_Calendar" -- Entity #19.
+    ADD CONSTRAINT "FK_Prop_Calendar_Block" FOREIGN KEY ("Prop_Availability_ID")
+    REFERENCES "Property_Block_Dates" ("Prop_Availability_ID")
+    ON DELETE CASCADE;
+
+-- FK referencing Accommodation_Booking Table
+ALTER TABLE "Property_Calendar" -- Entity #19.
+    ADD CONSTRAINT "FK_Prop_Calendar_Booking" FOREIGN KEY ("Booking_ID")
+    REFERENCES "Accommodation_Booking" ("Booking_ID")
+    ON DELETE CASCADE;
+-- "Accommodation_Booking" Table was CREATE(d) already, though it still did not exist yet;
+-- as it required [ "Accommodation_Booking" ("Booking_ID") ] first,
+-- which required [ "Property_Calendar" ("Property_Calendar_ID") ] first.
 
 -- ============================================
 --     21.  SCHEDULING (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "Property_Block_Dates" (
+CREATE TABLE "Experience_Calendar" (
   "" GENERATED ALWAYS AS IDENTITY, -- PK
   "" , -- FK
   "" ,
