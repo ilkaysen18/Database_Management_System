@@ -304,7 +304,7 @@ CREATE TABLE "Local_Payout" (
   -- FK referencing Guest / Tour Booker (User)
   CONSTRAINT "FK_Local_Payout_Guest" FOREIGN KEY ("Guest_ID")
     REFERENCES "User" ("User_ID")
-    ON DELETE CASCADE,
+    ON DELETE CASCADE
 );
 
 -- ============================================
@@ -381,7 +381,7 @@ CREATE TABLE "Payment_Method" (
   -- FK referencing "User" Table's ("User_ID") PK Attribute
   CONSTRAINT "FK_Payment_Method_User" FOREIGN KEY ("User_ID")
     REFERENCES "User" ("User_ID")
-    ON DELETE CASCADE,
+    ON DELETE CASCADE
 );
 
 -- ============================================
@@ -481,7 +481,7 @@ CREATE TABLE "Notifications" (
   -- OFK referencing
   CONSTRAINT "FK_Notifications_Exp_Booking" FOREIGN KEY ("Exp_Booking_ID")
     REFERENCES "Experience_Booking" ("Exp_Booking_ID")
-    ON DELETE CASCADE,
+    ON DELETE CASCADE
 );
 
 -- ============================================
@@ -532,7 +532,7 @@ CREATE TABLE "Property_Calendar" (
   -- PK Constraint
   CONSTRAINT "PK_Property_Calendar" PRIMARY KEY ("Property_Calendar_ID"),
 
-  -- FK referencing
+  -- FK referencing 
   CONSTRAINT "FK_Prop_Calendar_Listing" FOREIGN KEY ("Property_ID")
     REFERENCES "Accommodation_Listing" ("Property_ID")
     ON DELETE CASCADE
@@ -550,7 +550,7 @@ CREATE TABLE "Property_Block_Dates" (
   "Prop_Availability_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
   "Property_ID" INT NOT NULL, -- FK
   "Property_Calendar_ID" INT NOT NULL, -- FK
-  "Blocked_Date" DATE NOT NULL, -- new Attribute added 
+  "Prop_Blocked_Date" DATE NOT NULL, -- new Attribute added 
 
   -- PK Constraint
   CONSTRAINT "PK_Property_Block_Dates" PRIMARY KEY ("Prop_Availability_ID"),
@@ -563,7 +563,7 @@ CREATE TABLE "Property_Block_Dates" (
   -- FK referencing
   CONSTRAINT "FK_Prop_Block_Calendar" FOREIGN KEY ("Property_Calendar_ID")
     REFERENCES "Property_Calendar" ("Property_Calendar_ID")
-    ON DELETE CASCADE,
+    ON DELETE CASCADE
 );
 
 -- ====================================================
@@ -587,30 +587,23 @@ ALTER TABLE "Property_Calendar" -- Entity #19.
 -- as it required [ "Accommodation_Booking" ("Booking_ID") ] first,
 -- which required [ "Property_Calendar" ("Property_Calendar_ID") ] first.
 
--- ============================================
---     21.  SCHEDULING (DEPENDENT) ENTITY
--- ============================================
+-- ====================================================
+--       21.1.  SCHEDULING (DEPENDENT) ENTITY
+-- ====================================================
 
 CREATE TABLE "Experience_Calendar" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+  "Experience_Calendar_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Experience_Listing_ID" INT NOT NULL, -- FK
+  "Exp_Availability_ID" INT NOT NULL, -- FK to a "Experience_Block_Dates" Table, which hasn't been CREATE(d) yet
+  "Exp_Booking_ID" INT, -- OFK for experience booking records, which requires "Experience_Block_Dates" Table first
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Experience_Calendar" PRIMARY KEY ("Experience_Calendar_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  CONSTRAINT "FK_Exp_Calendar_Listing" FOREIGN KEY ("Experience_Listing_ID")
+    REFERENCES "Experience_Listing" ("Experience_Listing_ID")
+    ON DELETE CASCADE
 );
 
 -- ============================================
@@ -618,233 +611,226 @@ CREATE TABLE "Experience_Calendar" (
 -- ============================================
 
 CREATE TABLE "Experience_Block_Dates" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+  "Exp_Availability_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Experience_Listing_ID" INT NOT NULL, -- FK
+  "Exp_Blocked_Date" DATE NOT NULL, -- new Attribute added
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Experience_Block_Dates" PRIMARY KEY ("Exp_Availability_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  CONSTRAINT "FK_Exp_Block_Listing" FOREIGN KEY ("Experience_Listing_ID")
+    REFERENCES "Experience_Listing" ("Experience_Listing_ID")
+    ON DELETE CASCADE
 );
 
+-- ====================================================
+--     21.2.  SAFE RELATIONSHIP CONSTRAINTS LAYER
+-- ====================================================
+
+-- Can add remaining 2 FK Constraints (safely with ALTER TABLE) for Entity #21.
+
+-- FK referencing
+ALTER TABLE "Experience_Calendar"
+  ADD CONSTRAINT "FK_Exp_Calendar_Block" FOREIGN KEY ("Exp_Availability_ID")
+  REFERENCES "Experience_Block_Dates" ("Exp_Availability_ID")
+  ON DELETE CASCADE;
+
+-- FK referencing
+ALTER TABLE "Experience_Calendar"
+  ADD CONSTRAINT "FK_Exp_Calendar_Booking" FOREIGN KEY ("Exp_Booking_ID")
+  REFERENCES "Experience_Booking" ("Exp_Booking_ID")
+  ON DELETE CASCADE;
+
 -- ============================================
---   23. RATING & REVIEWS (DEPENDENT) ENTITY
+--   23. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
 CREATE TABLE "Accommodation_Review" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+  "Property_Review_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Property_Rating_ID" INT NOT NULL, -- FK
+  "Booking_ID" INT NOT NULL, -- FK
+  "Host_ID" INT NOT NULL, -- FK links to User_ID
+  "Guest_ID" INT NOT NULL, -- FK links to User_ID
+  "Accomm_Review_Content" TEXT NOT NULL, -- new attribute added
+  "Accomm_Review_Date" TIMESTAMP NOT NULL, -- new attribute added
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Accommodation_Review" PRIMARY KEY ("Property_Review_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_Acc_Review_Booking" FOREIGN KEY ("Booking_ID")
+    REFERENCES "Accommodation_Booking" ("Booking_ID")
+    ON DELETE CASCADE,
+  
+  -- FK referencing
+  CONSTRAINT "FK_Acc_Review_Host" FOREIGN KEY ("Host_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  CONSTRAINT "FK_Acc_Review_Guest" FOREIGN KEY ("Guest_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE 
 );
 
 -- ============================================
---   24. RATING & REVIEWS (DEPENDENT) ENTITY
+--   24. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
 CREATE TABLE "Accommodation_Rating" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+  "Property_Rating_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Property_Review_ID" INT NOT NULL, -- FK
+  "Booking_ID" INT NOT NULL, -- FK
+  "Host_ID" INT NOT NULL, -- FK links to User_ID
+  "Guest_ID" INT NOT NULL, -- FK links to User_ID
+  "Accomm_Rating_Score" INT NOT NULL, -- new attribute added
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Accommodation_Rating" PRIMARY KEY ("Property_Rating_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_Acc_Rating_Booking" FOREIGN KEY ("Booking_ID")
+    REFERENCES "Accommodation_Booking" ("Booking_ID")
+    ON DELETE CASCADE,
+  
+  -- FK referencing
+  CONSTRAINT "FK_Acc_Rating_Host" FOREIGN KEY ("Host_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_Acc_Rating_Guest" FOREIGN KEY ("Guest_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
  
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  -- Domain Rule: Standardized/Validation Rule for 5-star rating scale
+  CONSTRAINT "CK_Acc_Rating_Range" CHECK ("Accomm_Rating_Score" BETWEEN 1 AND 5)
 );
 
 -- ============================================
---   25. RATING & REVIEWS (DEPENDENT) ENTITY
--- ============================================
-
-CREATE TABLE "User_Review" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
-
-  -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
-
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
-);
-
--- ============================================
---   26. RATING & REVIEWS (DEPENDENT) ENTITY
--- ============================================
-
-CREATE TABLE "User_Rating" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
-
-  -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
-
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
-  -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
-);
-
--- ============================================
---   27. RATING & REVIEWS (DEPENDENT) ENTITY
+--   25. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
 CREATE TABLE "Experience_Review" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+  "Exp_Review_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Exp_Rating_ID" INT NOT NULL, -- FK, new attribute added
+  "Author_ID" INT NOT NULL, -- FK links to User_ID
+  "Receiver_ID" INT NOT NULL, -- FK links to User_ID
+  "Exp_Booking_ID" INT NOT NULL, -- FK
+  "Exp_Review_Content" TEXT NOT NULL, -- new attribute added
+  "Exp_Review_Date" TIMESTAMP NOT NULL, -- new attribute added
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Experience_Review" PRIMARY KEY ("Exp_Review_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_Exp_Review_Booking" FOREIGN KEY ("Exp_Booking_ID")
+    REFERENCES "Experience_Booking" ("Exp_Booking_ID")
+    ON DELETE CASCADE,
+
+  -- FK referencing
+  CONSTRAINT "FK_Exp_Review_Author" FOREIGN KEY ("Author_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  CONSTRAINT "FK_Exp_Review_Receiver" FOREIGN KEY ("Receiver_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE
 );
 
 -- ============================================
---   28. RATING & REVIEWS (DEPENDENT) ENTITY
+--   26. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
 CREATE TABLE "Experience_Rating" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+  "Exp_Rating_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Exp_Review_ID" INT NOT NULL, -- FK, new attribute added
+  "Author_ID" INT NOT NULL, -- FK links to User_ID
+  "Receiver_ID" INT NOT NULL, -- FK links to User_ID
+  "Exp_Booking_ID" INT NOT NULL, -- FK
+  "Exp_Rating_Score" INT NOT NULL, -- new attribute added
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_Experience_Rating" PRIMARY KEY ("Exp_Rating_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_Exp_Rating_Booking" FOREIGN KEY ("Exp_Booking_ID")
+    REFERENCES "Experience_Booking" ("Exp_Booking_ID")
+    ON DELETE CASCADE,
+
+  -- FK referencing
+  CONSTRAINT "FK_Exp_Rating_Author" FOREIGN KEY ("Author_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_Exp_Rating_Receiver" FOREIGN KEY ("Receiver_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
  
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  -- Domain Rule: Standardized/Validation Rule for 5-star rating scale
+  CONSTRAINT "CK_Exp_Rating_Range" CHECK ("Exp_Rating_Score" BETWEEN 1 AND 5)
 );
 
 -- ============================================
---    29.  TRANSACTIONAL (DEPENDENT) ENTITY
+--   27. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+CREATE TABLE "User_Review" (
+  "User_Review_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "User_Rating_ID" INT NOT NULL, -- FK
+  "Author_ID" INT NOT NULL, -- FK links to User_ID
+  "Receiver_ID" INT NOT NULL,  -- FK links to User_ID
+  "Booking_ID" INT, -- OFK linking review about a User to a Stay
+  "Exp_Booking_ID" INT, -- OFK linking review about a User to a Tour/Experience
+  "User_Review_Content" TEXT NOT NULL, -- new attribute added
+  "User_Review_Date" TIMESTAMP NOT NULL, -- new attribute added
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_User_Review" PRIMARY KEY ("User_Review_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_User_Review_Author" FOREIGN KEY ("Author_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_User_Review_Receiver" FOREIGN KEY ("Receiver_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
  
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  -- Domain Rule (Technical): Prevents account from leaving a self-review
+  CONSTRAINT "CK_No_Self_Review" CHECK ("Author_ID" <> "Receiver_ID") 
 );
 
 -- ============================================
---    30.  TRANSACTIONAL (DEPENDENT) ENTITY
+--   28. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "" (
-  "" GENERATED ALWAYS AS IDENTITY, -- PK
-  "" , -- FK
-  "" ,
+CREATE TABLE "User_Rating" (
+  "User_Rating_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "User_Review_ID" INT NOT NULL, -- FK
+  "Author_ID" INT NOT NULL, -- FK links to User_ID
+  "Receiver_ID" INT NOT NULL, -- FK links to User_ID
+  "Booking_ID" INT, -- OFK linking rating about a User to a Stay
+  "Exp_Booking_ID" INT, -- OFK linking rating about a User to a Tour/Experience
+  "User_Rating_Score" INT NOT NULL, -- new attribute added
 
   -- PK Constraint
-  CONSTRAINT "PK_" PRIMARY KEY (""),
+  CONSTRAINT "PK_User_Rating" PRIMARY KEY ("User_Rating_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_User_Rating_Author" FOREIGN KEY ("Author_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
   -- FK referencing
-  CONSTRAINT "FK_" FOREIGN KEY ("")
-    REFERENCES "" ("")
+  CONSTRAINT "FK_User_Rating_Receiver" FOREIGN KEY ("Receiver_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE,
  
-  -- Domain Rule:
-  CONSTRAINT "CK_" CHECK
- 
+  -- Domain Rule (Business): Standardized/Validation Rule for 5-star rating scale
+  CONSTRAINT "CK_User_Rating_Range" CHECK ("User_Rating_Score" BETWEEN 1 AND 5),
+  -- Domain Rule (Technical): Prevents account from leaving a self-rating
+  CONSTRAINT "CK_No_Self_Rating" CHECK ("Author_ID" <> "Receiver_ID")
 );
 
-
+-- =============================================================================================          
+--                    2 8   E N T I T Y   T A B L E S   C O M P L E T E
+-- =============================================================================================          
