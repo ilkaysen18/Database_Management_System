@@ -54,10 +54,11 @@
 # 02_dummy_data.sql
 
 ### Strategy
-* .....
+* Data Manipulation Language (DML) code for the 20 records of dummy data
+* Begins with base (dependent) entities (e.g. User Table) first
 
 ### SQL Statements
 ###### They will generally follow this structure:
-.....
+
 
 -----------------------------------------------------------------------------------------------------------------------------------
