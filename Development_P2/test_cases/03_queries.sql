@@ -3,9 +3,7 @@
 -- ===========================================================
 
 
--- ALIASES:
--- ft = Financial_Transaction, ab = Accommodation_Booking, eb = Experience_Booking,
--- ap = Accommodation_Price, el = Experience_Listing
+-- ALIASES:    ft = Financial_Transaction, ab = Accommodation_Booking, eb = Experience_Booking, ap = Accommodation_Price, el = Experience_Listing
 
 
 SELECT
