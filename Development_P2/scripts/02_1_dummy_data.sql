@@ -14,7 +14,7 @@
 
 --  1  "User" Table
 
-INSERT INTO "User" ("User_ID", "User_Name", "User_Email", "User_Phone", "Password_Hash") VALUES
+INSERT INTO "User" ("User_Type_ID", "User_Name", "User_Email", "User_Phone", "Password_Hash") VALUES
 (1, 'Max Mustermann', 'max.mustermann@email.de', '+491701111111', '$2b$12$K7vRnx8B92e1mWS...'),
 (2, 'Anna Schmidt', 'anna.schmidt@email.de', '+491702222222', '$2b$12$L8wSny9C93f2nXT...'),
 (3, 'Lukas Weber', 'lukas.weber@email.de', '+491703333333', '$2b$12$M9xTnz0D94g3oYU...'),
