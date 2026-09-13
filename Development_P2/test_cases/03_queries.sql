@@ -3,7 +3,8 @@
 -- ===========================================================
 
 
--- ALIASES:    ft = Financial_Transaction, ab = Accommodation_Booking, eb = Experience_Booking, ap = Accommodation_Price, el = Experience_Listing
+-- PURPOSE:         Accounting and Business Intelligence
+-- ALIASES:         ft = Financial_Transaction, ab = Accommodation_Booking, eb = Experience_Booking, ap = Accommodation_Price, el = Experience_Listing
 
 
 SELECT
@@ -42,11 +43,42 @@ ORDER BY
 -- ===========================================================
 --           QUERY 2:    ACCOMMODATION PERFORMANCE
 -- ===========================================================
--- ALIASES: al = Accommodation_Listing, ar = Accommodation_Review
+
+
+-- PURPOSE:         Joins over 3 Tables (Users, Listings, Reviews/Ratings), Displays Hosts with high performance levels
+-- ALIASES:         u = user, al = Accommodation_Listing, ar = Accommodation_Review, rate = Accommodation_Rating_Score
+
+
+SELECT
+  u."User_ID" AS "Host_ID"
+  u."User_Name" AS "Host_Profile"
+-- Changes technical words into more common language for backend users to understand:
+  al."Accommodation_Address" AS "Listing_Location"
+  ar."Accomm_Review_Content" AS "Guest_Text_Feedback"
+  rate."Accomm_Rating_Score" AS "Stars_Assigned"
+FROM
+  "User" u
+    -- Aliases "User" to u
+INNER JOIN
+  "Accommodation_Listing" al ON u."User_ID" = al."User_ID"
+    -- Aliases Accommodation_Listing to al
+INNER JOIN
+  "Accommodation_Review" ar ON al."Property_ID" = (SELECT "Property_ID" FROM "Accommodation_Booking" WHERE "Booking_ID" = ar."Booking_ID")
+    -- Aliases Accommodation_Review to ar
+INNER JOIN
+  "Accommodation_Rating" rate ON ar."Booking_ID" = rate."Booking_ID"
+WHERE
+  rate."Accomm_Rating_Score" >= 4
+ORDER BY
+  rate."Accomm_Rating_Score" DESC, u."User_Name" ASC;
 
 
 -- ===========================================================
 --          QUERY 3:    SECURITY AND VERIFICATION
 -- ===========================================================
--- ALIASES: 
 
+
+-- ALIASES:         u = user, v = verification, pm = Payment_Method, 
+
+
+-
