@@ -149,7 +149,7 @@ CREATE TABLE "Images" (
     REFERENCES "Accommodation_Listing" ("Property_ID")
     ON DELETE CASCADE,
   -- OFK (Experience_Listing_ID) referencing PK Entity Table (Experience_Listing)
-  CONSTRAINT "FK_Images_Experience" FOREIGN KEY
+  CONSTRAINT "FK_Images_Experience" FOREIGN KEY ("Experience_Listing_ID")
     REFERENCES "Experience_Listing" ("Experience_Listing_ID")
     ON DELETE CASCADE
 );
@@ -183,10 +183,6 @@ CREATE TABLE "Accommodation_Booking" (
   CONSTRAINT "FK_Booking_Property" FOREIGN KEY ("Property_ID")
     REFERENCES "Accommodation_Listing" ("Property_ID")
     ON DELETE CASCADE,
-  -- OFK (Notification_ID) referencing its relevant Entity Table
-  CONSTRAINT "FK_Notifications_Booking" FOREIGN KEY ("Notification_ID")
-    REFERENCES "Notifications" ("Notification_ID")
-    ON DELETE CASCADE,
 
   -- Domain Rule: Standardizes Booking_Status options as a Validation CHECK Constraint
   CONSTRAINT "CK_Booking_Status_Valid" CHECK (
@@ -207,7 +203,7 @@ CREATE TABLE "Experience_Booking" (
   "Exp_Booking_Status" VARCHAR(20) NOT NULL DEFAULT 'Pending',
 
   -- PK Constraint
-  CONSTRAINT "PK_Experience_Booking" PRIMARY KEY ("Exp_Booking_ID"),
+  CONSTRAINT "PK_Experience_Booking" PRIMARY KEY ("Experience_Booking_ID"),
 
   -- FK referencing Experience_Listing 
   CONSTRAINT "FK_Exp_Booking_Listing" FOREIGN KEY ("Experience_Listing_ID")
@@ -231,7 +227,7 @@ CREATE TABLE "Experience_Booking" (
 CREATE TABLE "Financial_Transaction" (
   "Transaction_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
   "Booking_ID" INT, -- references stays, OFK (conditional, see Domain Rule below for this Entity Table)
-  "Exp_Booking_ID" INT, -- references tours (experiences), OFK (conditional, see Domain Rule below for this Entity Table)
+  "Experience_Booking_ID" INT, -- references tours (experiences), OFK (conditional, see Domain Rule below for this Entity Table)
 
   -- PK Constraint
   CONSTRAINT "PK_Financial_Transaction" PRIMARY KEY ("Transaction_ID"),
@@ -241,14 +237,14 @@ CREATE TABLE "Financial_Transaction" (
         REFERENCES "Accommodation_Booking" ("Booking_ID")
         ON DELETE CASCADE,
   -- OFK referencing 
-  CONSTRAINT "FK_Financial_Transaction_Exp" FOREIGN KEY ("Exp_Booking_ID")
-        REFERENCES "Experience_Booking" ("Exp_Booking_ID")
+  CONSTRAINT "FK_Financial_Transaction_Exp" FOREIGN KEY ("Experience_Booking_ID")
+        REFERENCES "Experience_Booking" ("Experience_Booking_ID")
         ON DELETE CASCADE,
   
-  -- Domain Rule for (the above) OFK: Prevents transaction from processing without at least 1 service, e.g. either Booking_ID or Exp_Booking_ID, depending on service booked by Guest
+  -- Domain Rule for (the above) OFK: Prevents transaction from processing without at least 1 service, e.g. either Booking_ID or Experience_Booking_ID, depending on service booked by Guest
   CONSTRAINT "CK_Financial_Transaction_Source_Present" CHECK (
-    ("Booking_ID" IS NOT NULL AND "Exp_Booking_ID" IS NULL) OR
-    ("Booking_ID" IS NULL AND "Exp_Booking_ID" IS NOT NULL)
+    ("Booking_ID" IS NOT NULL AND "Experience_Booking_ID" IS NULL) OR
+    ("Booking_ID" IS NULL AND "Experience_Booking_ID" IS NOT NULL)
   )
 );
 
@@ -464,7 +460,7 @@ CREATE TABLE "Notifications" (
   "Is_Read" BOOLEAN NOT NULL DEFAULT FALSE, -- Boolean rule for True or False
   "User_ID" INT NOT NULL, -- FK links to User_ID
   "Booking_ID" INT, -- OFK points to Stays
-  "Exp_Booking_ID" INT, -- OFK points to Experiences
+  "Experience_Booking_ID" INT, -- OFK points to Experiences
 
   -- PK Constraint
   CONSTRAINT "PK_Notifications" PRIMARY KEY ("Notification_ID"),
@@ -479,8 +475,8 @@ CREATE TABLE "Notifications" (
     REFERENCES "Accommodation_Booking" ("Booking_ID")
     ON DELETE CASCADE,
   -- OFK referencing
-  CONSTRAINT "FK_Notifications_Exp_Booking" FOREIGN KEY ("Exp_Booking_ID")
-    REFERENCES "Experience_Booking" ("Exp_Booking_ID")
+  CONSTRAINT "FK_Notifications_Exp_Booking" FOREIGN KEY ("Experience_Booking_ID")
+    REFERENCES "Experience_Booking" ("Experience_Booking_ID")
     ON DELETE CASCADE
 );
 
@@ -595,7 +591,7 @@ CREATE TABLE "Experience_Calendar" (
   "Experience_Calendar_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
   "Experience_Listing_ID" INT NOT NULL, -- FK
   "Exp_Availability_ID" INT NOT NULL, -- FK to a "Experience_Block_Dates" Table, which hasn't been CREATE(d) yet
-  "Exp_Booking_ID" INT, -- OFK for experience booking records, which requires "Experience_Block_Dates" Table first
+  "Experience_Booking_ID" INT, -- OFK for experience booking records, which requires "Experience_Block_Dates" Table first
 
   -- PK Constraint
   CONSTRAINT "PK_Experience_Calendar" PRIMARY KEY ("Experience_Calendar_ID"),
@@ -638,8 +634,8 @@ ALTER TABLE "Experience_Calendar"
 
 -- FK referencing
 ALTER TABLE "Experience_Calendar"
-  ADD CONSTRAINT "FK_Exp_Calendar_Booking" FOREIGN KEY ("Exp_Booking_ID")
-  REFERENCES "Experience_Booking" ("Exp_Booking_ID")
+  ADD CONSTRAINT "FK_Exp_Calendar_Booking" FOREIGN KEY ("Experience_Booking_ID")
+  REFERENCES "Experience_Booking" ("Experience_Booking_ID")
   ON DELETE CASCADE;
 
 -- ============================================
@@ -715,7 +711,7 @@ CREATE TABLE "Experience_Review" (
   "Exp_Rating_ID" INT NOT NULL, -- FK, new attribute added
   "Author_ID" INT NOT NULL, -- FK links to User_ID
   "Receiver_ID" INT NOT NULL, -- FK links to User_ID
-  "Exp_Booking_ID" INT NOT NULL, -- FK
+  "Experience_Booking_ID" INT NOT NULL, -- FK
   "Exp_Review_Content" TEXT NOT NULL, -- new attribute added
   "Exp_Review_Date" TIMESTAMP NOT NULL, -- new attribute added
 
@@ -723,8 +719,8 @@ CREATE TABLE "Experience_Review" (
   CONSTRAINT "PK_Experience_Review" PRIMARY KEY ("Exp_Review_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_Exp_Review_Booking" FOREIGN KEY ("Exp_Booking_ID")
-    REFERENCES "Experience_Booking" ("Exp_Booking_ID")
+  CONSTRAINT "FK_Exp_Review_Booking" FOREIGN KEY ("Experience_Booking_ID")
+    REFERENCES "Experience_Booking" ("Experience_Booking_ID")
     ON DELETE CASCADE,
 
   -- FK referencing
@@ -746,15 +742,15 @@ CREATE TABLE "Experience_Rating" (
   "Exp_Review_ID" INT NOT NULL, -- FK, new attribute added
   "Author_ID" INT NOT NULL, -- FK links to User_ID
   "Receiver_ID" INT NOT NULL, -- FK links to User_ID
-  "Exp_Booking_ID" INT NOT NULL, -- FK
+  "Experience_Booking_ID" INT NOT NULL, -- FK
   "Exp_Rating_Score" INT NOT NULL, -- new attribute added
 
   -- PK Constraint
   CONSTRAINT "PK_Experience_Rating" PRIMARY KEY ("Exp_Rating_ID"),
 
   -- FK referencing
-  CONSTRAINT "FK_Exp_Rating_Booking" FOREIGN KEY ("Exp_Booking_ID")
-    REFERENCES "Experience_Booking" ("Exp_Booking_ID")
+  CONSTRAINT "FK_Exp_Rating_Booking" FOREIGN KEY ("Experience_Booking_ID")
+    REFERENCES "Experience_Booking" ("Experience_Booking_ID")
     ON DELETE CASCADE,
 
   -- FK referencing
@@ -780,7 +776,7 @@ CREATE TABLE "User_Review" (
   "Author_ID" INT NOT NULL, -- FK links to User_ID
   "Receiver_ID" INT NOT NULL,  -- FK links to User_ID
   "Booking_ID" INT, -- OFK linking review about a User to a Stay
-  "Exp_Booking_ID" INT, -- OFK linking review about a User to a Tour/Experience
+  "Experience_Booking_ID" INT, -- OFK linking review about a User to a Tour/Experience
   "User_Review_Content" TEXT NOT NULL, -- new attribute added
   "User_Review_Date" TIMESTAMP NOT NULL, -- new attribute added
 
@@ -810,7 +806,7 @@ CREATE TABLE "User_Rating" (
   "Author_ID" INT NOT NULL, -- FK links to User_ID
   "Receiver_ID" INT NOT NULL, -- FK links to User_ID
   "Booking_ID" INT, -- OFK linking rating about a User to a Stay
-  "Exp_Booking_ID" INT, -- OFK linking rating about a User to a Tour/Experience
+  "Experience_Booking_ID" INT, -- OFK linking rating about a User to a Tour/Experience
   "User_Rating_Score" INT NOT NULL, -- new attribute added
 
   -- PK Constraint
@@ -830,6 +826,21 @@ CREATE TABLE "User_Rating" (
   -- Domain Rule (Technical): Prevents account from leaving a self-rating
   CONSTRAINT "CK_No_Self_Rating" CHECK ("Author_ID" <> "Receiver_ID")
 );
+
+-- ============================================
+--     SAFE RELATIONSHIP CONSTRAINTS LAYER
+-- ============================================
+
+-- FK referencing
+ALTER TABLE "Accommodation_Booking" 
+    ADD CONSTRAINT "FK_Notifications_Booking_Link" FOREIGN KEY ("Notification_ID") 
+    REFERENCES "Notifications" ("Notification_ID") ON DELETE CASCADE;
+
+-- FK referencing
+ALTER TABLE "Experience_Booking" 
+    ADD CONSTRAINT "FK_Notifications_Experience_Link" FOREIGN KEY ("Notification_ID") 
+    REFERENCES "Notifications" ("Notification_ID") ON DELETE CASCADE;
+
 
 -- =============================================================================================          
 --                    2 8   E N T I T Y   T A B L E S   C O M P L E T E
