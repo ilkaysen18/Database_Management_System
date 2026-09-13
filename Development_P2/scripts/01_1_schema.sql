@@ -25,7 +25,7 @@ CREATE TABLE "User" (
     "User_Type" IN (
       'Host',
       'Guest',
-      'Local',
+      'Local'
     )
   )
 );
