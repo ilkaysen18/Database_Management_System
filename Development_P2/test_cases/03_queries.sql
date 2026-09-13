@@ -18,6 +18,7 @@ SELECT
     ELSE 'Guided Experience Tour'
   END AS "Service_Category",
     -- Categorizes services
+  
   COALESCE(ap."Nightly_Price", el."Experience_Price") AS "Gross_Price",
     -- Alias for ap = Accommodation_Price, el = Experience_Listing
     -- Joins ap & el into one Gross_Price
@@ -25,6 +26,8 @@ SELECT
     -- Calculates commissions for the platform
   ROUND((ap."Nightly_Price", el."Experience_Price") * 0.97, 2) AS "Net_Payout"
     -- Calculates payouts made to Hosts and Locals
+
+-- Joins all the Attributes into a single Table:
 FROM
   "Financial_Transaction" ft
 LEFT JOIN
@@ -35,7 +38,6 @@ LEFT JOIN
   "Experience_Booking" eb ON ft."Exp_Booking_ID" = eb."Exp_Booking_ID"
 LEFT JOIN
   "Experience_Listing" el ON eb."Experience_Listing_ID" = el."Experience_Listing_ID"
-    -- Joins all the Attributes into a single Table
 ORDER BY
   "Service_Category" ASC, "Gross_Price" DESC;
 
@@ -56,6 +58,8 @@ SELECT
   al."Accommodation_Address" AS "Listing_Location"
   ar."Accomm_Review_Content" AS "Guest_Text_Feedback"
   rate."Accomm_Rating_Score" AS "Stars_Assigned"
+
+-- Joins all the Attributes into a single Table:
 FROM
   "User" u
     -- Aliases "User" to u
@@ -67,6 +71,8 @@ INNER JOIN
     -- Aliases Accommodation_Review to ar
 INNER JOIN
   "Accommodation_Rating" rate ON ar."Booking_ID" = rate."Booking_ID"
+
+-- Establishes the order by displaying higher ratings first:
 WHERE
   rate."Accomm_Rating_Score" >= 4
 ORDER BY
