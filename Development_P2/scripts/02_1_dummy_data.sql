@@ -459,29 +459,27 @@ INSERT INTO "Message_Log" ("Thread_ID", "Sender_ID", "Receiver_ID", "Msg_Content
 
 --  18  "Notifications" Table
 
-INSERT INTO "Notifications" ("Notification_Type", "Message_Body", "Is_Read", "User_ID", "Booking_ID") VALUES
-('Booking', 'Your reservation request for Berlin Loft has been sent.', TRUE, 11, 1),
-('Booking', 'New booking request received for Munich Bedroom.', FALSE, 1, 2),
-('Payout', 'Your payout for the stay at Hamburg Studio has been initiated.', TRUE, 3, 5),
-('CI', 'Friendly reminder: Your check-in time starts at 14:00 tomorrow.', FALSE, 14, 4),
-('Booking', 'Your reservation request for Frankfurt Highrise has been sent.', TRUE, 17, 7),
-('Booking', 'Host accepted your reservation request for Düsseldorf Flat.', TRUE, 15, 5),
-('Booking', 'Your reservation request for Dresden Suite was declined.', TRUE, 11, 11),
-('Booking', 'New booking confirmed for Cologne central room space.', FALSE, 7, 13),
-('Booking', 'Your reservation request for Stuttgart paths was approved.', TRUE, 15, 15),
-('Booking', 'Host accepted your reservation request for Hannover Flat.', TRUE, 18, 18),
-('Booking', 'Your reservation request for Bremen old loft was confirmed.', FALSE, 20, 20),
-
-INSERT INTO "Notifications" ("Notification_Type", "Message_Body", "Is_Read", "User_ID", "Experience_Booking_ID") VALUES
-('Booking', 'Your tour booking for Graffiti Art has been confirmed!', TRUE, 1, 1),
-('Booking', 'A new participant registered for the Third Reich Seminar.', FALSE, 11, 2),
-('Payout', 'Tour distribution successfully processed into your bank vault.', TRUE, 12, 3),
-('CI', 'Get ready for your Sunset Coastal Photography workshop today.', FALSE, 4, 4),
-('Booking', 'Your tour request for Munich Wine Tasting is pending approval.', FALSE, 5, 5),
-('Booking', 'Your tour booking for Castle Vantage Trek has been accepted.', FALSE, 2, 12),
-('Booking', 'New participant registered for the Elbphilharmonie Tour.', TRUE, 17, 12),
-('Booking', 'Your tour request for Midnight Street Food is pending approval.', FALSE, 4, 14),
-('Booking', 'Your tour booking for Bauhaus Minimalist Walk has been accepted.', TRUE, 10, 19);
+INSERT INTO "Notifications" ("Notification_Type", "Message_Body", "Is_Read", "User_ID", "Booking_ID", "Experience_Booking_ID") VALUES
+('Booking', 'Your reservation request for Berlin Loft has been sent.', TRUE, '11', 1, NULL),
+('Booking', 'New booking request received for Munich Bedroom.', FALSE, '1', 2, NULL),
+('Payout', 'Your payout for the stay at Hamburg Studio has been initiated.', TRUE, '3', 5, NULL),
+('CI', 'Friendly reminder: Your check-in time starts at 14:00 tomorrow.', FALSE, '14', 4, NULL),
+('Booking', 'Your tour booking for Graffiti Art has been confirmed!', TRUE, '1', NULL, 1),
+('Booking', 'A new participant registered for the Third Reich Seminar.', FALSE, '11', NULL, 2),
+('Payout', 'Tour distribution successfully processed into your bank vault.', TRUE, '12', NULL, 3),
+('CI', 'Get ready for your Sunset Coastal Photography workshop today.', FALSE, '4', NULL, 4),
+('Booking', 'Your reservation request for Frankfurt Highrise has been sent.', TRUE, '17', 7, NULL),
+('Booking', 'Your tour request for Munich Wine Tasting is pending approval.', FALSE, '5', NULL, 5),
+('Booking', 'Host accepted your reservation request for Düsseldorf Flat.', TRUE, '15', 5, NULL),
+('Booking', 'Your reservation request for Dresden Suite was declined.', TRUE, '11', 11, NULL),
+('Booking', 'New booking confirmed for Cologne central room space.', FALSE, '7', 13, NULL),
+('Booking', 'Your reservation request for Stuttgart paths was approved.', TRUE, '15', 15, NULL),
+('Booking', 'Your tour booking for Castle Vantage Trek has been accepted.', FALSE, '2', NULL, 12),
+('Booking', 'New participant registered for the Elbphilharmonie Tour.', TRUE, '17', NULL, 12),
+('Booking', 'Your tour request for Midnight Street Food is pending approval.', FALSE, '4', NULL, 14),
+('Booking', 'Host accepted your reservation request for Hannover Flat.', TRUE, '18', 18, NULL),
+('Booking', 'Your reservation request for Bremen old loft was confirmed.', FALSE, '20', 20, NULL),
+('Booking', 'Your tour booking for Bauhaus Minimalist Walk has been accepted.', TRUE, '10', NULL, 19);
 
 
 --  19  "Financial_Transactions" Table
