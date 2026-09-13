@@ -247,34 +247,34 @@ INSERT INTO "Amenity" ("Property_ID", "Amenity_Name", "Amenity_Description") VAL
 (18, 'Air Conditioning', 'Standalone cooling fan appliance provided for summer comfort.');
 
 
---  10  "Property_Calendar" Table
+--  13  "Experience_Block_Dates" Table
 
-INSERT INTO "Property_Calendar" ("Property_ID", "Prop_Availability_ID", "Booking_ID") VALUES
-(1, 1, NULL),
-(2, 2, NULL),
-(3, 3, NULL),
-(4, 4, NULL),
-(5, 5, NULL),
-(6, 6, NULL),
-(7, 7, NULL),
-(8, 8, NULL),
-(9, 9, NULL),
-(10, 10, NULL),
-(11, 11, NULL),
-(12, 12, NULL),
-(13, 13, NULL),
-(14, 14, NULL),
-(15, 15, NULL),
-(16, 16, NULL),
-(17, 17, NULL),
-(18, 18, NULL),
-(19, 19, NULL),
-(20, 20, NULL);
+INSERT INTO "Experience_Block_Dates" ("Experience_Listing_ID", "Exp_Blocked_Date") VALUES
+(1, '2026-12-24'),
+(2, '2026-12-25'),
+(3, '2026-12-26'),
+(4, '2026-12-31'),
+(5, '2027-01-01'),
+(6, '2026-10-03'),
+(7, '2026-05-01'),
+(8, '2026-12-24'),
+(9, '2026-12-25'),
+(10, '2026-12-31'),
+(11, '2027-01-01'),
+(12, '2026-10-03'),
+(13, '2026-11-01'),
+(14, '2026-12-24'),
+(15, '2026-12-25'),
+(16, '2026-12-31'),
+(17, '2027-01-01'),
+(18, '2026-10-03'),
+(19, '2026-05-01'),
+(20, '2026-11-01');
 
 
 --  11  "Experience_Calendar" Table
 
-INSERT INTO "Experience_Calendar" ("Experience_Listing_ID", "Exp_Availability_ID", "Exp_Booking_ID") VALUES
+INSERT INTO "Experience_Calendar" ("Experience_Listing_ID", "Exp_Availability_ID", "Experience_Booking_ID") VALUES
 (1, 1, NULL),
 (2, 2, NULL),
 (3, 3, NULL),
@@ -327,29 +327,29 @@ INSERT INTO "Property_Block_Dates" ("Property_ID", "Property_Calendar_ID", "Prop
 (20, 20, '2026-11-20');
 
 
---  13  "Experience_Block_Dates" Table
+--  10  "Property_Calendar" Table
 
-INSERT INTO "Experience_Block_Dates" ("Experience_Listing_ID", "Exp_Blocked_Date") VALUES
-(1, '2026-12-24'),
-(2, '2026-12-25'),
-(3, '2026-12-26'),
-(4, '2026-12-31'),
-(5, '2027-01-01'),
-(6, '2026-10-03'),
-(7, '2026-05-01'),
-(8, '2026-12-24'),
-(9, '2026-12-25'),
-(10, '2026-12-31'),
-(11, '2027-01-01'),
-(12, '2026-10-03'),
-(13, '2026-11-01'),
-(14, '2026-12-24'),
-(15, '2026-12-25'),
-(16, '2026-12-31'),
-(17, '2027-01-01'),
-(18, '2026-10-03'),
-(19, '2026-05-01'),
-(20, '2026-11-01');
+INSERT INTO "Property_Calendar" ("Property_ID", "Prop_Availability_ID", "Booking_ID") VALUES
+(1, 1, NULL),
+(2, 2, NULL),
+(3, 3, NULL),
+(4, 4, NULL),
+(5, 5, NULL),
+(6, 6, NULL),
+(7, 7, NULL),
+(8, 8, NULL),
+(9, 9, NULL),
+(10, 10, NULL),
+(11, 11, NULL),
+(12, 12, NULL),
+(13, 13, NULL),
+(14, 14, NULL),
+(15, 15, NULL),
+(16, 16, NULL),
+(17, 17, NULL),
+(18, 18, NULL),
+(19, 19, NULL),
+(20, 20, NULL);
 
 
 --  14  "Accommodation_Booking" Table
@@ -459,7 +459,7 @@ INSERT INTO "Message_Log" ("Thread_ID", "Sender_ID", "Receiver_ID", "Msg_Content
 
 --  18  "Notifications" Table
 
-INSERT INTO "Notifications" ("Notification_Type", "Message_Body", "Is_Read", "User_ID", "Booking_ID", "Exp_Booking_ID") VALUES
+INSERT INTO "Notifications" ("Notification_Type", "Message_Body", "Is_Read", "User_ID", "Booking_ID", "Experience_Booking_ID") VALUES
 ('Booking', 'Your reservation request for Berlin Loft has been sent.', TRUE, '11', 1, NULL),
 ('Booking', 'New booking request received for Munich Bedroom.', FALSE, '1', 2, NULL),
 ('Payout', 'Your payout for the stay at Hamburg Studio has been initiated.', TRUE, '3', 5, NULL),
@@ -484,7 +484,7 @@ INSERT INTO "Notifications" ("Notification_Type", "Message_Body", "Is_Read", "Us
 
 --  19  "Financial_Transactions" Table
 
-INSERT INTO "Financial_Transaction" ("Booking_ID", "Exp_Booking_ID") VALUES
+INSERT INTO "Financial_Transaction" ("Booking_ID", "Experience_Booking_ID") VALUES
 (1, NULL),      -- Stay Transaction 1
 (2, NULL),      -- Stay Transaction 2
 (3, NULL),      -- Stay Transaction 3
@@ -614,7 +614,7 @@ INSERT INTO "Accommodation_Rating" ("Property_Review_ID", "Booking_ID", "Host_ID
 
 --  24  "Experience_Review" Table
 
-INSERT INTO "Experience_Review" ("Exp_Rating_ID", "Author_ID", "Receiver_ID", "Exp_Booking_ID", "Exp_Review_Content", "Exp_Review_Date") VALUES
+INSERT INTO "Experience_Review" ("Exp_Rating_ID", "Author_ID", "Receiver_ID", "Experience_Booking_ID", "Exp_Review_Content", "Exp_Review_Date") VALUES
 (1, 1, 11, 1, 'Incredible graffiti tour! Learned so much about the underground street art scene in Berlin.', '2026-12-25 10:00:00'),
 (2, 2, 11, 2, 'A very informative historic walk. The guide was articulate and deeply knowledgeable.', '2026-12-26 14:30:00'),
 (3, 3, 12, 3, 'Fantastic private sailing lesson on the Fjord! The instructor was calm and clear.', '2026-12-27 16:15:00'),
@@ -639,7 +639,7 @@ INSERT INTO "Experience_Review" ("Exp_Rating_ID", "Author_ID", "Receiver_ID", "E
 
 --  25  "Experience_Rating" Table
 
-INSERT INTO "Experience_Rating" ("Exp_Review_ID", "Exp_Booking_ID", "Author_ID", "Receiver_ID", "Exp_Rating_Score") VALUES
+INSERT INTO "Experience_Rating" ("Exp_Review_ID", "Experience_Booking_ID", "Author_ID", "Receiver_ID", "Exp_Rating_Score") VALUES
 (1, 1, 1, 11, 5),
 (2, 2, 2, 11, 5),
 (3, 3, 3, 12, 4),
@@ -664,7 +664,7 @@ INSERT INTO "Experience_Rating" ("Exp_Review_ID", "Exp_Booking_ID", "Author_ID",
 
 --  26  "User_Review" Table
 
-INSERT INTO "User_Review" ("User_Rating_ID", "Author_ID", "Receiver_ID", "Booking_ID", "Exp_Booking_ID", "User_Review_Content", "User_Review_Date") VALUES
+INSERT INTO "User_Review" ("User_Rating_ID", "Author_ID", "Receiver_ID", "Booking_ID", "Experience_Booking_ID", "User_Review_Content", "User_Review_Date") VALUES
 (1, 11, 1, 1, NULL, 'Max was a spectacular landlord! Exceptionally friendly, clean, and helpful.', '2026-10-12 12:00:00'),
 (2, 1, 11, 1, 'Max is a polite guest who left the rooms pristine. Highly recommended.', '2026-10-12 12:15:00'),
 (3, 12, 1, 2, NULL, 'Max made our travel logistics simple. Communication was pristine.', '2026-10-18 11:00:00'),
@@ -689,7 +689,7 @@ INSERT INTO "User_Review" ("User_Rating_ID", "Author_ID", "Receiver_ID", "Bookin
 
 --  27  "User_Rating" Table
 
-INSERT INTO "User_Rating" ("User_Review_ID", "Author_ID", "Receiver_ID", "Booking_ID", "Exp_Booking_ID", "User_Rating_Score") VALUES
+INSERT INTO "User_Rating" ("User_Review_ID", "Author_ID", "Receiver_ID", "Booking_ID", "Experience_Booking_ID", "User_Rating_Score") VALUES
 (1, 11, 1, 1, NULL, 5),
 (2, 1, 11, 1, NULL, 5),
 (3, 12, 1, 2, NULL, 5),
