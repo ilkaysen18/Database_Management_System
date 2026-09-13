@@ -9,6 +9,8 @@
 -- Main "User" Entity Table
 CREATE TABLE "User" (
   "User_ID" INT GENERATED ALWAYS AS IDENTITY,
+  "User_Type" VARCHAR(50) NOT NULL, -- e.g. 'Host', 'Guest', 'Local'
+  "User_Type_ID" INT NOT NULL, -- Links to User_ID, Needs to be defined for its Dummy Data Table
   "User_Name" VARCHAR(100) NOT NULL,
   "User_Email" VARCHAR(255) NOT NULL,
   "User_Phone" VARCHAR(30),
@@ -16,7 +18,16 @@ CREATE TABLE "User" (
   
   -- Data Integrity and Key Constraints
   CONSTRAINT "PK_User" PRIMARY KEY ("User_ID"),
-  CONSTRAINT "UQ_User_Email" UNIQUE ("User_Email")
+  CONSTRAINT "UQ_User_Email" UNIQUE ("User_Email"),
+
+  -- Domain Rule (Technical): Standardizes User_Type, required for the User Dummy Data Table
+  CONSTRAINT "CK_User_Type_Standardized" CHECK (
+    "User_Type" IN (
+      'Host',
+      'Guest',
+      'Local',
+    )
+  )
 );
 
 -- ============================================
