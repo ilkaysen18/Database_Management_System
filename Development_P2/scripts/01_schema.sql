@@ -2,13 +2,32 @@
 --                                 E N T I T Y    T A B L E S
 -- =============================================================================================          
 
+-- ===============================================================================================================================================================================
+-- IMPORTANT PROCESSES/CHANGES (UPDATES) UNDERGONE DURING TESTING: 
+-- ===============================================================================================================================================================================
+-- After some run errors on Supabase: Some Entities were reordered due to FK not existing or Child Table existing prior to Parent Table.
+-- There were also some Circular Loops that ran errors, thus one FK (Property_Calendar_ID) was removed from Property_Block_Dates, given there were 2 similar keys in this Entity.
+-- All the Calendar and Booking related Entities were grouped together, one after the other, after reordering, as they kept running errors -
+-- additionally, some FK Constraints were removed from these Entities and placed straight after the next Entity (after their FK was actually created as a PK in that next Table).
+-- Lastly, some additional Keys and further Constraints were added, such as User_Type and User_Type_ID,
+-- as the User_ID was unable to be defined in the Dummy Data properly and this was a solution that worked, after trying multiple other ways.
+-- Also, adding specific User_Type (standardized) options was particularly useful when the data became unorganized when running the Dummy Data Tables on Supabase - 
+-- as all of the separate ID keys in other Entities pointed to separate Users, where readers would not understand who is who; 
+-- and many of those 25+ ID Keys kept running errors, as the system either couldn't point to which User the IDs belonged to, 
+-- and/or (more often than that) the same Users appeared in conflicting Actions in the Dummy Data (such as Hosts and Locals interacting with each other,
+-- however the main User should have been Guests interacting with either Hosts or Locals); thus specifying a User_Type was crucial in the database's normalization.
+-- ===============================================================================================================================================================================
+
 -- ============================================
 --       1. BASE (INDEPENDENT) ENTITY
 -- ============================================
 
--- Main "User" Entity Table
+-- Main "User" Entity Table :
+
 CREATE TABLE "User" (
   "User_ID" INT GENERATED ALWAYS AS IDENTITY,
+  "User_Type" VARCHAR(50) NOT NULL, -- e.g. 'Host', 'Guest', 'Local'
+  "User_Type_ID" INT NOT NULL, -- Links to User_ID, Needs to be defined for its Dummy Data Table
   "User_Name" VARCHAR(100) NOT NULL,
   "User_Email" VARCHAR(255) NOT NULL,
   "User_Phone" VARCHAR(30),
@@ -16,7 +35,16 @@ CREATE TABLE "User" (
   
   -- Data Integrity and Key Constraints
   CONSTRAINT "PK_User" PRIMARY KEY ("User_ID"),
-  CONSTRAINT "UQ_User_Email" UNIQUE ("User_Email")
+  CONSTRAINT "UQ_User_Email" UNIQUE ("User_Email"),
+
+  -- Domain Rule (Technical): Standardizes User_Type, required for the User Dummy Data Table
+  CONSTRAINT "CK_User_Type_Standardized" CHECK (
+    "User_Type" IN (
+      'Host',
+      'Guest',
+      'Local'
+    )
+  )
 );
 
 -- ============================================
