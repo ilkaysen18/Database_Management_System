@@ -239,10 +239,10 @@ CREATE TABLE "Accommodation_Price" (
 );
 
 -- ============================================
---     18.  DISCOVERY (DEPENDENT) ENTITY
+--     9.  DISCOVERY (DEPENDENT) ENTITY
 -- ============================================
 
--- "Accommodation_Price" Entity Table :9
+-- "Amenity" Entity Table :
 
 CREATE TABLE "Amenity" (
   "Amenity_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -275,124 +275,52 @@ CREATE TABLE "Amenity" (
   )
 );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
--- ============================================
---             6. DEPENDENT ENTITY
--- ============================================
-
-CREATE TABLE "Images" (
-  "Image_ID" INT GENERATED ALWAYS AS IDENTITY,
-  "User_ID" INT NOT NULL, -- FK
-  "Accommodation_Listing_ID" INT, -- Optional Foreign Key (OFK) mapping to stays, newly added attribute 
-  "Experience_Listing_ID" INT, -- OFK mapping to tours (Experiences)
-  "Property_ID" INT NOT NULL, -- FK
-  "Image_URL" VARCHAR(255) NOT NULL,
-  "Image_Caption" VARCHAR(150),
-
-  -- Defines PK
-  CONSTRAINT "PK_Images" PRIMARY KEY ("Image_ID"),
-
-  -- FK references User who uploaded the image
-  CONSTRAINT "FK_Images_User" FOREIGN KEY ("User_ID")
-    REFERENCES "User" ("User_ID")
-    ON DELETE CASCADE,
-  -- FK (Property_ID) references PK Entity (Accommodation_Listing)
-  CONSTRAINT "FK_Accommodation_Price_Property" FOREIGN KEY ("Property_ID")
+-- ====================================================
+--        10.1.  SCHEDULING (DEPENDENT) ENTITY
+-- ====================================================
+
+-- "Property_Calendar" Entity Table :
+
+CREATE TABLE "Property_Calendar" (
+  "Property_Calendar_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Property_ID" INT NOT NULL, -- FK from Accommodation_Listing Entity/Table
+  "Prop_Availability_ID" INT NOT NULL, -- FK links to availability blocks
+  "Booking_ID" INT, -- OFK for booking records
+
+  -- PK Constraint
+  CONSTRAINT "PK_Property_Calendar" PRIMARY KEY ("Property_Calendar_ID"),
+
+  -- FK referencing 
+  CONSTRAINT "FK_Prop_Calendar_Listing" FOREIGN KEY ("Property_ID")
     REFERENCES "Accommodation_Listing" ("Property_ID")
-    ON DELETE CASCADE,
-
-  -- OFK (Accommodation_Listing_ID) referencing PK Entity Table (Accommodation_Listing)
-  CONSTRAINT "FK_Images_Accommodation" FOREIGN KEY ("Accommodation_Listing_ID")
-    REFERENCES "Accommodation_Listing" ("Property_ID")
-    ON DELETE CASCADE,
-  -- OFK (Experience_Listing_ID) referencing PK Entity Table (Experience_Listing)
-  CONSTRAINT "FK_Images_Experience" FOREIGN KEY ("Experience_Listing_ID")
-    REFERENCES "Experience_Listing" ("Experience_Listing_ID")
     ON DELETE CASCADE
 );
 
 -- ============================================
---    7.  TRANSACTIONAL (DEPENDENT) ENTITY
+--    10.2.  SCHEDULING (DEPENDENT) ENTITY
 -- ============================================
+
+-- "Property_Block_Dates" Entity Table :
+
+CREATE TABLE "Property_Block_Dates" (
+  "Prop_Availability_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Property_ID" INT NOT NULL, -- FK
+  "Prop_Blocked_Date" DATE NOT NULL, -- new Attribute added 
+
+  -- PK Constraint
+  CONSTRAINT "PK_Property_Block_Dates" PRIMARY KEY ("Prop_Availability_ID"),
+
+  -- FK referencing
+  CONSTRAINT "FK_Prop_Block_Listing" FOREIGN KEY ("Property_ID")
+    REFERENCES "Accommodation_Listing" ("Property_ID")
+    ON DELETE CASCADE
+);
+
+-- ============================================
+--   10.3.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+
+-- "Accommodation_Booking" Entity Table :
 
 CREATE TABLE "Accommodation_Booking" (
   "Booking_ID" INT GENERATED ALWAYS AS IDENTITY,
@@ -426,9 +354,76 @@ CREATE TABLE "Accommodation_Booking" (
   )
 );
 
+-- ====================================================
+--     10.4.  SAFE RELATIONSHIP CONSTRAINTS LAYER
+-- ====================================================
+
+-- "Property_Calendar" Entity Table :
+
+-- Can now add the remaining 2 FK Constraints (safely with ALTER TABLE) for the Entity:
+
+-- FK referencing :
+ALTER TABLE "Property_Calendar"
+    ADD CONSTRAINT "FK_Prop_Calendar_Block" FOREIGN KEY ("Prop_Availability_ID")
+      REFERENCES "Property_Block_Dates" ("Prop_Availability_ID")
+      ON DELETE CASCADE;
+
+-- FK referencing Accommodation_Booking Table :
+ALTER TABLE "Property_Calendar"
+    ADD CONSTRAINT "FK_Prop_Calendar_Booking" FOREIGN KEY ("Booking_ID")
+      REFERENCES "Accommodation_Booking" ("Booking_ID")
+      ON DELETE CASCADE;
+
+-- "Accommodation_Booking" Table was CREATE(d) already, though it still did not exist yet;
+-- as it required [ "Accommodation_Booking" ("Booking_ID") ] first,
+-- which required [ "Property_Calendar" ("Property_Calendar_ID") ] first.
+
+-- ====================================================
+--       11.1.  SCHEDULING (DEPENDENT) ENTITY
+-- ====================================================
+
+-- "Experience_Calendar" Entity Table :
+
+CREATE TABLE "Experience_Calendar" (
+  "Experience_Calendar_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Experience_Listing_ID" INT NOT NULL, -- FK
+  "Exp_Availability_ID" INT NOT NULL, -- FK to a "Experience_Block_Dates" Table, which hasn't been CREATE(d) yet
+  "Experience_Booking_ID" INT, -- OFK for experience booking records, which requires "Experience_Block_Dates" Table first
+
+  -- PK Constraint
+  CONSTRAINT "PK_Experience_Calendar" PRIMARY KEY ("Experience_Calendar_ID"),
+
+  -- FK referencing
+  CONSTRAINT "FK_Exp_Calendar_Listing" FOREIGN KEY ("Experience_Listing_ID")
+    REFERENCES "Experience_Listing" ("Experience_Listing_ID")
+    ON DELETE CASCADE
+);
+
 -- ============================================
---    8.  TRANSACTIONAL (DEPENDENT) ENTITY
+--    11.2.  SCHEDULING (DEPENDENT) ENTITY
 -- ============================================
+
+-- "Experience_Block_Dates" Entity Table :
+
+CREATE TABLE "Experience_Block_Dates" (
+  "Exp_Availability_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Experience_Listing_ID" INT NOT NULL, -- FK
+  "Exp_Blocked_Date" DATE NOT NULL, -- new Attribute added
+
+  -- PK Constraint
+  CONSTRAINT "PK_Experience_Block_Dates" PRIMARY KEY ("Exp_Availability_ID"),
+
+  -- FK referencing
+  CONSTRAINT "FK_Exp_Block_Listing" FOREIGN KEY ("Experience_Listing_ID")
+    REFERENCES "Experience_Listing" ("Experience_Listing_ID")
+    ON DELETE CASCADE
+);
+
+-- ============================================
+--   11.3.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
+
+-- "Experience_Booking" Entity Table :
 
 CREATE TABLE "Experience_Booking" (
   "Experience_Booking_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -456,92 +451,31 @@ CREATE TABLE "Experience_Booking" (
   )
 );
 
--- ============================================
---    9.  TRANSACTIONAL (DEPENDENT) ENTITY
--- ============================================
+-- ====================================================
+--     11.4.  SAFE RELATIONSHIP CONSTRAINTS LAYER
+-- ====================================================
 
-CREATE TABLE "Financial_Transaction" (
-  "Transaction_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "Booking_ID" INT, -- references stays, OFK (conditional, see Domain Rule below for this Entity Table)
-  "Experience_Booking_ID" INT, -- references tours (experiences), OFK (conditional, see Domain Rule below for this Entity Table)
+-- "Experience_Calendar" Entity Table :
 
-  -- PK Constraint
-  CONSTRAINT "PK_Financial_Transaction" PRIMARY KEY ("Transaction_ID"),
-  
-  -- OFK referencing 
-  CONSTRAINT "FK_Financial_Transaction_Booking" FOREIGN KEY ("Booking_ID")
-        REFERENCES "Accommodation_Booking" ("Booking_ID")
-        ON DELETE CASCADE,
-  -- OFK referencing 
-  CONSTRAINT "FK_Financial_Transaction_Exp" FOREIGN KEY ("Experience_Booking_ID")
-        REFERENCES "Experience_Booking" ("Experience_Booking_ID")
-        ON DELETE CASCADE,
-  
-  -- Domain Rule for (the above) OFK: Prevents transaction from processing without at least 1 service, e.g. either Booking_ID or Experience_Booking_ID, depending on service booked by Guest
-  CONSTRAINT "CK_Financial_Transaction_Source_Present" CHECK (
-    ("Booking_ID" IS NOT NULL AND "Experience_Booking_ID" IS NULL) OR
-    ("Booking_ID" IS NULL AND "Experience_Booking_ID" IS NOT NULL)
-  )
-);
+-- Can add remaining 2 FK Constraints (safely with ALTER TABLE) for Entity:
+
+-- FK referencing :
+ALTER TABLE "Experience_Calendar"
+  ADD CONSTRAINT "FK_Exp_Calendar_Block" FOREIGN KEY ("Exp_Availability_ID")
+  REFERENCES "Experience_Block_Dates" ("Exp_Availability_ID")
+  ON DELETE CASCADE;
+
+-- FK referencing :
+ALTER TABLE "Experience_Calendar"
+  ADD CONSTRAINT "FK_Exp_Calendar_Booking" FOREIGN KEY ("Experience_Booking_ID")
+  REFERENCES "Experience_Booking" ("Experience_Booking_ID")
+  ON DELETE CASCADE;
 
 -- ============================================
---    10.  TRANSACTIONAL (DEPENDENT) ENTITY
--- ============================================
-CREATE TABLE "Host_Payout" (
-  "Host_Payout_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "Transaction_ID" INT NOT NULL, -- FK
-  "Host_ID" INT NOT NULL, -- Links to User_ID, FK
-  "Guest_ID" INT NOT NULL, -- Links to User_ID, FK
-
-  -- PK Constraint
-  CONSTRAINT "PK_Host_Payout" PRIMARY KEY ("Host_Payout_ID"),
-
-  -- FK referencing "Financial_Transaction" Table's ("Transaction_ID") PK Attribute
-  CONSTRAINT "FK_Host_Payout_Transaction" FOREIGN KEY ("Transaction_ID")
-    REFERENCES "Financial_Transaction" ("Transaction_ID")
-    ON DELETE CASCADE,
-  
-  -- FK referencing Host (User)
-  CONSTRAINT "FK_Host_Payout_Host" FOREIGN KEY ("Host_ID")
-    REFERENCES "User" ("User_ID")
-    ON DELETE CASCADE,
-  -- Foreign Key referencing Guest (User)
-  CONSTRAINT "FK_Host_Payout_Guest" FOREIGN KEY ("Guest_ID")
-    REFERENCES "User" ("User_ID")
-    ON DELETE CASCADE
-);
-
--- ============================================
---    11.  TRANSACTIONAL (DEPENDENT) ENTITY
+--    12.  COMMUNICATION (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "Local_Payout" (
-  "Local_Payout_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "Transaction_ID" INT NOT NULL, -- FK
-  "Local_ID" INT NOT NULL, -- Links to User_ID, FK
-  "Guest_ID" INT NOT NULL, -- Links to User_ID, FK
-
-  -- PK Constraint
-  CONSTRAINT "PK_Local_Payout" PRIMARY KEY ("Local_Payout_ID"),
-
-  -- FK referencing "Financial_Transaction" Table's ("Transaction_ID") PK Attribute
-  CONSTRAINT "FK_Local_Payout_Transaction" FOREIGN KEY ("Transaction_ID")
-    REFERENCES "Financial_Transaction" ("Transaction_ID")
-    ON DELETE CASCADE,
-  
-  -- FK referencing Local / Tour Creator (User)
-  CONSTRAINT "FK_Local_Payout_Local" FOREIGN KEY ("Local_ID")
-    REFERENCES "User" ("User_ID")
-    ON DELETE CASCADE,
-  -- FK referencing Guest / Tour Booker (User)
-  CONSTRAINT "FK_Local_Payout_Guest" FOREIGN KEY ("Guest_ID")
-    REFERENCES "User" ("User_ID")
-    ON DELETE CASCADE
-);
-
--- ============================================
---    15.  COMMUNICATION (DEPENDENT) ENTITY
--- ============================================
+-- "Message_Thread" Entity Table :
 
 CREATE TABLE "Message_Thread" (
   "Thread_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -576,8 +510,10 @@ CREATE TABLE "Message_Thread" (
 );
 
 -- ============================================
---    16.  COMMUNICATION (DEPENDENT) ENTITY
+--    13.  COMMUNICATION (DEPENDENT) ENTITY
 -- ============================================
+
+-- "Message_Log" Entity Table :
 
 CREATE TABLE "Message_Log" (
   "Msg_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -609,8 +545,10 @@ CREATE TABLE "Message_Log" (
 );
 
 -- ============================================
--- 17. ACCOUNT & INTEGRATION (DEPENDENT) ENTITY
+-- 14. ACCOUNT & INTEGRATION (DEPENDENT) ENTITY
 -- ============================================
+
+-- "Notifications" Entity Table :
 
 CREATE TABLE "Notifications" (
   "Notification_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -636,135 +574,110 @@ CREATE TABLE "Notifications" (
   -- OFK referencing
   CONSTRAINT "FK_Notifications_Exp_Booking" FOREIGN KEY ("Experience_Booking_ID")
     REFERENCES "Experience_Booking" ("Experience_Booking_ID")
-    ON DELETE CASCADE
+    ON DELETE CASCADE,
+
+  -- Domain Rule for (the above) OFK: Prevents notification from being sent out without at least 1 service, e.g. either Booking_ID or Experience_Booking_ID, depending on service booked by Guest
+  CONSTRAINT "CK_Notifications_Source_Present" CHECK (
+    ("Booking_ID" IS NOT NULL AND "Experience_Booking_ID" IS NULL) OR
+    ("Booking_ID" IS NULL AND "Experience_Booking_ID" IS NOT NULL)
+  )
 );
 
--- ====================================================
---       19.1.  SCHEDULING (DEPENDENT) ENTITY
--- ====================================================
+-- ============================================
+--    15.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
 
-CREATE TABLE "Property_Calendar" (
-  "Property_Calendar_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "Property_ID" INT NOT NULL, -- FK from Accommodation_Listing Entity/Table
-  "Prop_Availability_ID" INT NOT NULL, -- FK links to availability blocks
-  "Booking_ID" INT, -- OFK for booking records
+-- "Financial_Transaction" Entity Table :
+
+CREATE TABLE "Financial_Transaction" (
+  "Transaction_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Booking_ID" INT, -- references stays, OFK (conditional, see Domain Rule below for this Entity Table)
+  "Experience_Booking_ID" INT, -- references tours (experiences), OFK (conditional, see Domain Rule below for this Entity Table)
 
   -- PK Constraint
-  CONSTRAINT "PK_Property_Calendar" PRIMARY KEY ("Property_Calendar_ID"),
-
-  -- FK referencing 
-  CONSTRAINT "FK_Prop_Calendar_Listing" FOREIGN KEY ("Property_ID")
-    REFERENCES "Accommodation_Listing" ("Property_ID")
-    ON DELETE CASCADE
+  CONSTRAINT "PK_Financial_Transaction" PRIMARY KEY ("Transaction_ID"),
   
-  -- To prevent a Circular Compilation Loop Error in Supabase:
-  -- The other 2 FK Constraints are not added yet, as their PK Tables haven't been CREATE(d) yet;
-  -- They will be added in the next Entity as ALTER TABLE command.
+  -- OFK referencing 
+  CONSTRAINT "FK_Financial_Transaction_Booking" FOREIGN KEY ("Booking_ID")
+        REFERENCES "Accommodation_Booking" ("Booking_ID")
+        ON DELETE CASCADE,
+  -- OFK referencing 
+  CONSTRAINT "FK_Financial_Transaction_Exp" FOREIGN KEY ("Experience_Booking_ID")
+        REFERENCES "Experience_Booking" ("Experience_Booking_ID")
+        ON DELETE CASCADE,
+  
+  -- Domain Rule for (the above) OFK: Prevents transaction from processing without at least 1 service, e.g. either Booking_ID or Experience_Booking_ID, depending on service booked by Guest
+  CONSTRAINT "CK_Financial_Transaction_Source_Present" CHECK (
+    ("Booking_ID" IS NOT NULL AND "Experience_Booking_ID" IS NULL) OR
+    ("Booking_ID" IS NULL AND "Experience_Booking_ID" IS NOT NULL)
+  )
 );
 
 -- ============================================
---     20.  SCHEDULING (DEPENDENT) ENTITY
+--    16.  TRANSACTIONAL (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "Property_Block_Dates" (
-  "Prop_Availability_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "Property_ID" INT NOT NULL, -- FK
-  "Property_Calendar_ID" INT NOT NULL, -- FK
-  "Prop_Blocked_Date" DATE NOT NULL, -- new Attribute added 
+-- "Host_Payout" Entity Table :
+
+CREATE TABLE "Host_Payout" (
+  "Host_Payout_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Transaction_ID" INT NOT NULL, -- FK
+  "Host_ID" INT NOT NULL, -- Links to User_ID, FK
+  "Guest_ID" INT NOT NULL, -- Links to User_ID, FK
 
   -- PK Constraint
-  CONSTRAINT "PK_Property_Block_Dates" PRIMARY KEY ("Prop_Availability_ID"),
+  CONSTRAINT "PK_Host_Payout" PRIMARY KEY ("Host_Payout_ID"),
 
-  -- FK referencing
-  CONSTRAINT "FK_Prop_Block_Listing" FOREIGN KEY ("Property_ID")
-    REFERENCES "Accommodation_Listing" ("Property_ID")
+  -- FK referencing "Financial_Transaction" Table's ("Transaction_ID") PK Attribute
+  CONSTRAINT "FK_Host_Payout_Transaction" FOREIGN KEY ("Transaction_ID")
+    REFERENCES "Financial_Transaction" ("Transaction_ID")
     ON DELETE CASCADE,
   
-  -- FK referencing
-  CONSTRAINT "FK_Prop_Block_Calendar" FOREIGN KEY ("Property_Calendar_ID")
-    REFERENCES "Property_Calendar" ("Property_Calendar_ID")
+  -- FK referencing Host (User)
+  CONSTRAINT "FK_Host_Payout_Host" FOREIGN KEY ("Host_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+  -- Foreign Key referencing Guest (User)
+  CONSTRAINT "FK_Host_Payout_Guest" FOREIGN KEY ("Guest_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE
 );
 
--- ====================================================
---     19.2.  SAFE RELATIONSHIP CONSTRAINTS LAYER
--- ====================================================
+-- ============================================
+--    17.  TRANSACTIONAL (DEPENDENT) ENTITY
+-- ============================================
 
--- Can now add the remaining 2 FK Constraints (safely with ALTER TABLE) for Entity #19.
+-- "Local_Payout" Entity Table :
 
--- FK referencing 
-ALTER TABLE "Property_Calendar" -- Entity #19.
-    ADD CONSTRAINT "FK_Prop_Calendar_Block" FOREIGN KEY ("Prop_Availability_ID")
-    REFERENCES "Property_Block_Dates" ("Prop_Availability_ID")
-    ON DELETE CASCADE;
-
--- FK referencing Accommodation_Booking Table
-ALTER TABLE "Property_Calendar" -- Entity #19.
-    ADD CONSTRAINT "FK_Prop_Calendar_Booking" FOREIGN KEY ("Booking_ID")
-    REFERENCES "Accommodation_Booking" ("Booking_ID")
-    ON DELETE CASCADE;
--- "Accommodation_Booking" Table was CREATE(d) already, though it still did not exist yet;
--- as it required [ "Accommodation_Booking" ("Booking_ID") ] first,
--- which required [ "Property_Calendar" ("Property_Calendar_ID") ] first.
-
--- ====================================================
---       21.1.  SCHEDULING (DEPENDENT) ENTITY
--- ====================================================
-
-CREATE TABLE "Experience_Calendar" (
-  "Experience_Calendar_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "Experience_Listing_ID" INT NOT NULL, -- FK
-  "Exp_Availability_ID" INT NOT NULL, -- FK to a "Experience_Block_Dates" Table, which hasn't been CREATE(d) yet
-  "Experience_Booking_ID" INT, -- OFK for experience booking records, which requires "Experience_Block_Dates" Table first
+CREATE TABLE "Local_Payout" (
+  "Local_Payout_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Transaction_ID" INT NOT NULL, -- FK
+  "Local_ID" INT NOT NULL, -- Links to User_ID, FK
+  "Guest_ID" INT NOT NULL, -- Links to User_ID, FK
 
   -- PK Constraint
-  CONSTRAINT "PK_Experience_Calendar" PRIMARY KEY ("Experience_Calendar_ID"),
+  CONSTRAINT "PK_Local_Payout" PRIMARY KEY ("Local_Payout_ID"),
 
-  -- FK referencing
-  CONSTRAINT "FK_Exp_Calendar_Listing" FOREIGN KEY ("Experience_Listing_ID")
-    REFERENCES "Experience_Listing" ("Experience_Listing_ID")
+  -- FK referencing "Financial_Transaction" Table's ("Transaction_ID") PK Attribute
+  CONSTRAINT "FK_Local_Payout_Transaction" FOREIGN KEY ("Transaction_ID")
+    REFERENCES "Financial_Transaction" ("Transaction_ID")
+    ON DELETE CASCADE,
+  
+  -- FK referencing Local / Tour Creator (User)
+  CONSTRAINT "FK_Local_Payout_Local" FOREIGN KEY ("Local_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+  -- FK referencing Guest / Tour Booker (User)
+  CONSTRAINT "FK_Local_Payout_Guest" FOREIGN KEY ("Guest_ID")
+    REFERENCES "User" ("User_ID")
     ON DELETE CASCADE
 );
 
 -- ============================================
---     22.  SCHEDULING (DEPENDENT) ENTITY
+--   18. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
 
-CREATE TABLE "Experience_Block_Dates" (
-  "Exp_Availability_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "Experience_Listing_ID" INT NOT NULL, -- FK
-  "Exp_Blocked_Date" DATE NOT NULL, -- new Attribute added
-
-  -- PK Constraint
-  CONSTRAINT "PK_Experience_Block_Dates" PRIMARY KEY ("Exp_Availability_ID"),
-
-  -- FK referencing
-  CONSTRAINT "FK_Exp_Block_Listing" FOREIGN KEY ("Experience_Listing_ID")
-    REFERENCES "Experience_Listing" ("Experience_Listing_ID")
-    ON DELETE CASCADE
-);
-
--- ====================================================
---     21.2.  SAFE RELATIONSHIP CONSTRAINTS LAYER
--- ====================================================
-
--- Can add remaining 2 FK Constraints (safely with ALTER TABLE) for Entity #21.
-
--- FK referencing
-ALTER TABLE "Experience_Calendar"
-  ADD CONSTRAINT "FK_Exp_Calendar_Block" FOREIGN KEY ("Exp_Availability_ID")
-  REFERENCES "Experience_Block_Dates" ("Exp_Availability_ID")
-  ON DELETE CASCADE;
-
--- FK referencing
-ALTER TABLE "Experience_Calendar"
-  ADD CONSTRAINT "FK_Exp_Calendar_Booking" FOREIGN KEY ("Experience_Booking_ID")
-  REFERENCES "Experience_Booking" ("Experience_Booking_ID")
-  ON DELETE CASCADE;
-
--- ============================================
---   23. RATINGS & REVIEWS (DEPENDENT) ENTITY
--- ============================================
+-- "Accommodation_Review" Entity Table :
 
 CREATE TABLE "Accommodation_Review" (
   "Property_Review_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -794,8 +707,10 @@ CREATE TABLE "Accommodation_Review" (
 );
 
 -- ============================================
---   24. RATINGS & REVIEWS (DEPENDENT) ENTITY
+--   19. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
+
+-- "Accommodation_Rating" Entity Table :
 
 CREATE TABLE "Accommodation_Rating" (
   "Property_Rating_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -827,8 +742,10 @@ CREATE TABLE "Accommodation_Rating" (
 );
 
 -- ============================================
---   25. RATINGS & REVIEWS (DEPENDENT) ENTITY
+--   20. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
+
+-- "Experience_Review" Entity Table :
 
 CREATE TABLE "Experience_Review" (
   "Exp_Review_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -858,8 +775,10 @@ CREATE TABLE "Experience_Review" (
 );
 
 -- ============================================
---   26. RATINGS & REVIEWS (DEPENDENT) ENTITY
+--   21. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
+
+-- "Experience_Rating" Entity Table :
 
 CREATE TABLE "Experience_Rating" (
   "Exp_Rating_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -891,8 +810,10 @@ CREATE TABLE "Experience_Rating" (
 );
 
 -- ============================================
---   27. RATINGS & REVIEWS (DEPENDENT) ENTITY
+--   22. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
+
+-- "User_Review" Entity Table :
 
 CREATE TABLE "User_Review" (
   "User_Review_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -921,8 +842,10 @@ CREATE TABLE "User_Review" (
 );
 
 -- ============================================
---   28. RATINGS & REVIEWS (DEPENDENT) ENTITY
+--   23. RATINGS & REVIEWS (DEPENDENT) ENTITY
 -- ============================================
+
+-- "User_Rating" Entity Table :
 
 CREATE TABLE "User_Rating" (
   "User_Rating_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
@@ -952,20 +875,44 @@ CREATE TABLE "User_Rating" (
 );
 
 -- ============================================
---     SAFE RELATIONSHIP CONSTRAINTS LAYER
+--             24. DEPENDENT ENTITY
 -- ============================================
 
--- FK referencing
-ALTER TABLE "Accommodation_Booking" 
-    ADD CONSTRAINT "FK_Notifications_Booking_Link" FOREIGN KEY ("Notification_ID") 
-    REFERENCES "Notifications" ("Notification_ID") ON DELETE CASCADE;
+-- "Images" Entity Table :
 
--- FK referencing
-ALTER TABLE "Experience_Booking" 
-    ADD CONSTRAINT "FK_Notifications_Experience_Link" FOREIGN KEY ("Notification_ID") 
-    REFERENCES "Notifications" ("Notification_ID") ON DELETE CASCADE;
+CREATE TABLE "Images" (
+  "Image_ID" INT GENERATED ALWAYS AS IDENTITY,
+  "User_ID" INT NOT NULL, -- FK
+  "Accommodation_Listing_ID" INT, -- Optional Foreign Key (OFK) mapping to stays, newly added attribute 
+  "Experience_Listing_ID" INT, -- OFK mapping to tours (Experiences)
+  "Property_ID" INT NOT NULL, -- FK
+  "Image_URL" VARCHAR(255) NOT NULL,
+  "Image_Caption" VARCHAR(150),
 
+  -- Defines PK
+  CONSTRAINT "PK_Images" PRIMARY KEY ("Image_ID"),
+
+  -- FK references User who uploaded the image
+  CONSTRAINT "FK_Images_User" FOREIGN KEY ("User_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+  -- FK (Property_ID) references PK Entity (Accommodation_Listing)
+  CONSTRAINT "FK_Accommodation_Price_Property" FOREIGN KEY ("Property_ID")
+    REFERENCES "Accommodation_Listing" ("Property_ID")
+    ON DELETE CASCADE,
+
+  -- OFK (Accommodation_Listing_ID) referencing PK Entity Table (Accommodation_Listing)
+  CONSTRAINT "FK_Images_Accommodation" FOREIGN KEY ("Accommodation_Listing_ID")
+    REFERENCES "Accommodation_Listing" ("Property_ID")
+    ON DELETE CASCADE,
+  -- OFK (Experience_Listing_ID) referencing PK Entity Table (Experience_Listing)
+  CONSTRAINT "FK_Images_Experience" FOREIGN KEY ("Experience_Listing_ID")
+    REFERENCES "Experience_Listing" ("Experience_Listing_ID")
+    ON DELETE CASCADE
+);
 
 -- =============================================================================================          
 --                    2 8   E N T I T Y   T A B L E S   C O M P L E T E
 -- =============================================================================================          
+-- 24 + 2 + 2    for the (Property and Experience/Tours) Calendar and Booking related Entities     = 28 Entities (Tables) in total 
+-- =============================================================================================  
