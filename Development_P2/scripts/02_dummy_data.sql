@@ -6,11 +6,22 @@
 -- 01_schema.sql          :  This first file has each Entity's PK set to GENERATED ALWAYS AS IDENTITY
 -- 02_dummy_data.sql      :  Thus, in this second file, each record's PK is left unfilled
 
+-- ===============================================================================================================================================================================
+-- SIGNIFICANT CHANGES MADE AFTER RUNNING THE DUMMY RECORDS ON SUPABASE: 
+-- ===============================================================================================================================================================================
+-- The SQL Statements from the Schema file mostly ran successfully the first time on Supabase, however the Dummy Records weren't successful the first time round.
+-- Thus a lot of these Records had to be reordered, and were the main reason for the changes made in the Schema file.
+-- As mentioned previously, User_ID was unable to be defined in the Dummy Data properly and/or couldn't be specifically connected with other Entities.
+-- After trying a few different methods, the option that worked was to add a separate User_ID (that could connect FK such as Host_ID, Guest_ID, & Local_ID to a specific User_Type). 
+-- Additionally, adding the User_Type Key was much required as the combination of records had become especially unorganized when running the Dummy Data Tables on Supabase - 
+-- as a result of many of the 25+ ID Keys in other Entities that either pointed to separate Users or kept running errors, since the system was overloaded with similar Users
+-- appearing in conflicting Actions (such as Hosts and Locals interacting with each other - when mostly Guests should actually have been interacting with either Hosts or Locals).
+-- Thus, specifying a User_Type was crucial in database normalization; and furthermore, allowed the opportunity to add that additional User_ID as a User_Type_ID.
+-- ===============================================================================================================================================================================
 
 -- ============================
 --  BASE (INDEPENDENT) RECORDS
 -- ============================
-
 
 --  1  "User" Table
 
