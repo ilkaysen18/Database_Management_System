@@ -723,6 +723,36 @@ INSERT INTO "User_Rating" ("User_Review_ID", "Author_ID", "Receiver_ID", "Bookin
 (20, 8, 15, 15, NULL, 5);
 
 
+-- ============================
+--      DEPENDENT RECORDS
+-- ============================
+
+
+--  28  "Images" Table
+
+INSERT INTO "Images" ("User_ID", "Accommodation_Listing_ID", "Experience_Listing_ID", "Property_ID", "Image_URL", "Image_Caption") VALUES
+(1, 1, NULL, 1, 'https://supabase.storage', 'Industrial loft open space living area view'),
+(1, 2, NULL, 2, 'https://supabase.storage', 'High-ceiling bedroom balcony landscape angle'),
+(2, 3, NULL, 3, 'https://supabase.storage', 'Cozy private workspace setup near window frame'),
+(2, 4, NULL, 4, 'https://supabase.storage', 'Compact kitchen layout showcasing induction deck'),
+(3, 5, NULL, 5, 'https://supabase.storage', 'Waterfront panoramic scenery view from the balcony'),
+(3, 6, NULL, 6, 'https://supabase.storage', 'Premium layout bedding configuration close up'),
+(4, 7, NULL, 7, 'https://supabase.storage', 'Skyscraper living room looking over city blocks'),
+(4, 8, NULL, 8, 'https://supabase.storage', 'Traditional exposed timber masonry wood accents'),
+(5, 9, NULL, 9, 'https://supabase.storage', 'Smart home integrated system control lighting lines'),
+(5, 10, NULL, 10, 'https://supabase.storage', 'Western waterway walking dock proximity map view'),
+(6, 11, NULL, 11, 'https://supabase.storage', 'Acoustic insulated historic brick interior panel'),
+(6, 12, NULL, 12, 'https://supabase.storage', 'Minimalist standardized furniture setup arrangement'),
+(7, 13, NULL, 13, 'https://supabase.storage', 'High speed wireless network infrastructure gateway'),
+(7, 14, NULL, 14, 'https://supabase.storage', 'Isolated open timber patio overlooking historical sites'),
+(8, 15, NULL, 15, 'https://supabase.storage', 'Automated climate monitoring utility tracking screen'),
+(8, 16, NULL, 16, 'https://supabase.storage', 'Quiet countryside path entry point exterior context'),
+(9, 17, NULL, 17, 'https://supabase.storage', 'Fairytale old-town masonry stone facade entry gate'),
+(10, 18, NULL, 18, 'https://supabase.storage', 'Low latency fiber optic line hub terminal workspace'),
+(10, 19, NULL, 19, 'https://supabase.storage', 'Serene private bedroom window garden perimeter views'),
+(9, 20, NULL, 20, 'https://supabase.storage', 'Renovated penthouse roof angles facing scenic trails');
+
+
 -- =============================================================================================          
 --              D M L   W I T H   D U M M Y   R E C O R D S   C O M P L E T E
 -- =============================================================================================          
