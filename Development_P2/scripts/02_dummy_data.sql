@@ -418,7 +418,7 @@ INSERT INTO "Experience_Booking" ("Experience_Listing_ID", "Guest_ID", "Experien
 -- ============================
 
 
---  12  "Message_Thread" Records
+--  12.  "Message_Thread" Records
 
 INSERT INTO "Message_Thread" ("Booking_ID", "Thread_Subject", "Thread_Date", "Thread_Status", "Guest_ID", "Host_ID") VALUES
 (1, 'Check-In Details Müllerstraße', '2026-10-01 10:00:00', 'Active', 11, 1),
@@ -443,7 +443,7 @@ INSERT INTO "Message_Thread" ("Booking_ID", "Thread_Subject", "Thread_Date", "Th
 (3, 'Theresienwiese Lost and Found', '2026-10-21 10:30:00', 'Deleted', 13, 2);
 
 
---  13  "Message_Log" Records
+--  13.  "Message_Log" Records
 
 INSERT INTO "Message_Log" ("Thread_ID", "Sender_ID", "Receiver_ID", "Msg_Content", "Msg_Timestamp") VALUES
 (1, 11, 1, 'Hello Max, where can I find the door code?', '2026-10-01 10:05:00'),
@@ -468,7 +468,7 @@ INSERT INTO "Message_Log" ("Thread_ID", "Sender_ID", "Receiver_ID", "Msg_Content
 (18, 20, 9, 'We left the keys on the kitchen counter.', '2026-10-18 16:10:00');
 
 
---  14  "Notifications" Records
+--  14.  "Notifications" Records
 
 INSERT INTO "Notifications" ("Notification_Type", "Message_Body", "Is_Read", "User_ID", "Booking_ID", "Experience_Booking_ID") VALUES
 ('Booking', 'Your reservation request for Berlin Loft has been sent.', TRUE, '11', 1, NULL),
@@ -493,7 +493,7 @@ INSERT INTO "Notifications" ("Notification_Type", "Message_Body", "Is_Read", "Us
 ('Booking', 'Your tour booking for Bauhaus Minimalist Walk has been accepted.', TRUE, '10', NULL, 19);
 
 
---  15  "Financial_Transaction" Records
+--  15.  "Financial_Transaction" Records
 
 INSERT INTO "Financial_Transaction" ("Booking_ID", "Experience_Booking_ID") VALUES
 (1, NULL),      -- Stay Transaction 1
@@ -523,7 +523,7 @@ INSERT INTO "Financial_Transaction" ("Booking_ID", "Experience_Booking_ID") VALU
 -- ============================
 
 
---  16  "Host_Payout" Records
+--  16.  "Host_Payout" Records
 
 INSERT INTO "Host_Payout" ("Transaction_ID", "Host_ID", "Guest_ID") VALUES
 (1, 1, 11),
@@ -548,7 +548,7 @@ INSERT INTO "Host_Payout" ("Transaction_ID", "Host_ID", "Guest_ID") VALUES
 (10, 8, 15);
 
 
---  17  "Local_Payout" Records
+--  17.  "Local_Payout" Records
 
 INSERT INTO "Local_Payout" ("Transaction_ID", "Local_ID", "Guest_ID") VALUES
 (11, 11, 1),
@@ -573,7 +573,7 @@ INSERT INTO "Local_Payout" ("Transaction_ID", "Local_ID", "Guest_ID") VALUES
 (20, 17, 4);
 
 
---  18  "Accommodation_Review" Records
+--  18.  "Accommodation_Review" Records
 
 INSERT INTO "Accommodation_Review" ("Property_Rating_ID", "Booking_ID", "Host_ID", "Guest_ID", "Accomm_Review_Content", "Accomm_Review_Date") VALUES
 (1, 1, 1, 11, 'Beautiful loft apartment! The industrial details were stunning and checking in was seamless.', '2026-10-12 11:00:00'),
@@ -598,7 +598,7 @@ INSERT INTO "Accommodation_Review" ("Property_Rating_ID", "Booking_ID", "Host_ID
 (20, 15, 8, 15, 'Smart lighting system was incredibly cool. Great property management standard.', '2026-12-19 12:15:00');
 
 
---  19  "Accommodation_Rating" Records
+--  19.  "Accommodation_Rating" Records
 
 INSERT INTO "Accommodation_Rating" ("Property_Review_ID", "Booking_ID", "Host_ID", "Guest_ID", "Accomm_Rating_Score") VALUES
 (1, 1, 1, 11, 5),
@@ -623,7 +623,7 @@ INSERT INTO "Accommodation_Rating" ("Property_Review_ID", "Booking_ID", "Host_ID
 (20, 15, 8, 15, 5);
 
 
---  20  "Experience_Review" Records
+--  20.  "Experience_Review" Records
 
 INSERT INTO "Experience_Review" ("Exp_Rating_ID", "Author_ID", "Receiver_ID", "Experience_Booking_ID", "Exp_Review_Content", "Exp_Review_Date") VALUES
 (1, 1, 11, 1, 'Incredible graffiti tour! Learned so much about the underground street art scene in Berlin.', '2026-12-25 10:00:00'),
@@ -648,7 +648,7 @@ INSERT INTO "Experience_Review" ("Exp_Rating_ID", "Author_ID", "Receiver_ID", "E
 (20, 3, 12, 3, 'Safe boat handling tips. Perfect for beginner sailors looking for confidence.', '2026-12-28 11:00:00');
 
 
---  21  "Experience_Rating" Records
+--  21.  "Experience_Rating" Records
 
 INSERT INTO "Experience_Rating" ("Exp_Review_ID", "Experience_Booking_ID", "Author_ID", "Receiver_ID", "Exp_Rating_Score") VALUES
 (1, 1, 1, 11, 5),
@@ -673,7 +673,7 @@ INSERT INTO "Experience_Rating" ("Exp_Review_ID", "Experience_Booking_ID", "Auth
 (20, 3, 3, 12, 4);
 
 
---  22  "User_Review" Records
+--  22.  "User_Review" Records
 
 INSERT INTO "User_Review" ("User_Rating_ID", "Author_ID", "Receiver_ID", "Booking_ID", "User_Review_Content", "User_Review_Date") VALUES
 (1, 11, 1, 1, 'Max was a spectacular landlord! Exceptionally friendly, clean, and helpful.', '2026-10-12 12:00:00'),
@@ -698,7 +698,7 @@ INSERT INTO "User_Review" ("User_Rating_ID", "Author_ID", "Receiver_ID", "Bookin
 (20, 8, 15, 15, 'Highly recommended guest profile. Friendly, neat, and highly reliable.', '2026-12-18 11:20:00');
 
 
---  23  "User_Rating" Records
+--  23.  "User_Rating" Records
 
 INSERT INTO "User_Rating" ("User_Review_ID", "Author_ID", "Receiver_ID", "Booking_ID", "User_Rating_Score") VALUES
 (1, 11, 1, 1, 5),
@@ -728,7 +728,7 @@ INSERT INTO "User_Rating" ("User_Review_ID", "Author_ID", "Receiver_ID", "Bookin
 -- ============================
 
 
---  24  "Images" Records
+--  24.  "Images" Records
 
 INSERT INTO "Images" ("User_ID", "Accommodation_Listing_ID", "Experience_Listing_ID", "Property_ID", "Image_URL", "Image_Caption") VALUES
 (1, 1, NULL, 1, 'https://supabase.storage', 'Industrial loft open space living area view'),
@@ -755,4 +755,6 @@ INSERT INTO "Images" ("User_ID", "Accommodation_Listing_ID", "Experience_Listing
 
 -- =============================================================================================          
 --              D M L   W I T H   D U M M Y   R E C O R D S   C O M P L E T E
--- =============================================================================================           
+-- =============================================================================================          
+-- 24 + 2 + 2    for the (Property and Experience/Tours) Calendar and Booking related Records     = 28 in total 
+-- =============================================================================================          
