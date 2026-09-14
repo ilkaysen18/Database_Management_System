@@ -51,6 +51,8 @@ CREATE TABLE "User" (
 --            2. DEPENDENT ENTITY
 -- ============================================
 
+-- "User_Profile" Entity Table :
+
 CREATE TABLE "User_Profile" (
   "Profile_ID" INT GENERATED ALWAYS AS IDENTITY,
   "User_ID" INT NOT NULL,
@@ -67,8 +69,93 @@ CREATE TABLE "User_Profile" (
 );
 
 -- ============================================
---              3. CORE ENTITY
+--  3. ACCOUNT & SECURITY (DEPENDENT) ENTITY
 -- ============================================
+
+-- "Verification" Entity Table :
+
+CREATE TABLE "Verification" (
+  "Verification_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "User_ID" INT NOT NULL, -- FK
+  "Email_Verification_Status" VARCHAR(50) NOT NULL DEFAULT 'Unverified',
+  "Phone_Verification_Status" VARCHAR(50) NOT NULL DEFAULT 'Unverified',
+  "ID_Verification_Status" VARCHAR(50) NOT NULL DEFAULT 'Not Retained',
+
+  -- PK Constraint
+  CONSTRAINT "PK_Verification" PRIMARY KEY ("Verification_ID"),
+
+  -- FK referencing "User" Table's ("User_ID") PK Attribute
+  CONSTRAINT "FK_Verification_User" FOREIGN KEY ("User_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule: Standardizes auditing/verification status
+  CONSTRAINT "CK_Email_Status_Valid" CHECK (
+    "Email_Verification_Status" IN ('Verified', 'Unverified')
+    ),
+  CONSTRAINT "CK_Phone_Status_Valid" CHECK (
+    "Phone_Verification_Status" IN ('Verified', 'Unverified')
+    ),
+  CONSTRAINT "CK_ID_Status_Valid" CHECK (
+    "ID_Verification_Status" IN ('Verified', 'Not Retained')
+    )
+);
+
+-- ============================================
+-- 4. ACCOUNT & INTEGRATION (DEPENDENT) ENTITY
+-- ============================================
+
+-- "Payment_Method" Entity Table :
+
+CREATE TABLE "Payment_Method" (
+  "Payment_Method_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "User_ID" INT NOT NULL, -- FK
+  "Payment_Option" VARCHAR(50) NOT NULL DEFAULT 'Credit Card', -- e.g., Credit Card or PayPal, also a new attribute
+  "Encrypted_Payment_Token" VARCHAR(512) NOT NULL, -- For payment security, also new attribute
+  "Billing_Address" VARCHAR(255), -- new attribute 
+  "Default_Payment_Option" BOOLEAN NOT NULL DEFAULT FALSE, -- new attribute
+  
+  -- PK Constraint
+  CONSTRAINT "PK_Payment_Method" PRIMARY KEY ("Payment_Method_ID"),
+
+  -- FK referencing "User" Table's ("User_ID") PK Attribute
+  CONSTRAINT "FK_Payment_Method_User" FOREIGN KEY ("User_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE
+);
+
+-- ============================================
+--    5. ACCOUNT & TRUST (DEPENDENT) ENTITY
+-- ============================================
+
+-- "Social_Media_Connection" Entity Table :
+
+CREATE TABLE "Social_Media_Connection" (
+  "SMP_Token" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "User_ID" INT NOT NULL, -- Points to user's own User_ID, FK
+  "Connection_ID" INT NOT NULL, -- Points to user's Social Media Platform (SMP) Connection's User_ID, FK
+
+  -- PK Constraint
+  CONSTRAINT "PK_Social_Media_Connection" PRIMARY KEY ("SMP_Token"),
+
+  -- FK referencing "User" Table's ("User_ID") PK Attribute, for the Source (Original) User connecting
+  CONSTRAINT "FK_SMP_Source_User" FOREIGN KEY ("User_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+  -- FK referencing "User" Table's ("User_ID") PK Attribute, for the Target Peer (the User's Connection)
+  CONSTRAINT "FK_SMP_Target_Peer" FOREIGN KEY ("Connection_ID")
+    REFERENCES "User" ("User_ID")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule (Structural): Users cannot connect/link with their own account (recursively)
+  CONSTRAINT "CK_No_Self_Connection" CHECK ("User_ID" <> "Connection_ID") -- This Inequality Operator ( <> ) is a Self-Loop Blocking CHECK Constraint
+);
+
+-- ============================================
+--              6. CORE ENTITY
+-- ============================================
+
+-- "Accommodation_Listing" Entity Table :
 
 CREATE TABLE "Accommodation_Listing" (
   "Property_ID" INT GENERATED ALWAYS AS IDENTITY,
@@ -91,8 +178,10 @@ CREATE TABLE "Accommodation_Listing" (
 );
 
 -- ============================================
---               4. CORE ENTITY
+--               7. CORE ENTITY
 -- ============================================
+
+-- "Experience_Listing" Entity Table :
 
 CREATE TABLE "Experience_Listing" (
   "Experience_Listing_ID" INT GENERATED ALWAYS AS IDENTITY,
@@ -119,8 +208,10 @@ CREATE TABLE "Experience_Listing" (
 -- =============================================================================================         
 
 -- ============================================
---             5. DEPENDENT ENTITY
+--             8. DEPENDENT ENTITY
 -- ============================================
+
+-- "Accommodation_Price" Entity Table :
 
 CREATE TABLE "Accommodation_Price" (
   "Price_ID" INT GENERATED ALWAYS AS IDENTITY,
@@ -146,6 +237,123 @@ CREATE TABLE "Accommodation_Price" (
   -- Domain Rule 2: Enforces European currency for standardization
   CONSTRAINT "CK_Accommodation_Currency_EUR" CHECK ("Currency_Code" = 'EUR')
 );
+
+-- ============================================
+--     18.  DISCOVERY (DEPENDENT) ENTITY
+-- ============================================
+
+-- "Accommodation_Price" Entity Table :9
+
+CREATE TABLE "Amenity" (
+  "Amenity_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
+  "Property_ID" INT NOT NULL, -- FK links to Accommodation_Listing Entity/Table
+  "Amenity_Name" VARCHAR(50) NOT NULL, -- e.g., 'Wi-Fi', 'Pool', 'Kitchen', also a new attribute
+  "Amenity_Description" TEXT, -- new attribute
+
+  -- PK Constraint
+  CONSTRAINT "PK_Amenity" PRIMARY KEY ("Amenity_ID"),
+
+  -- FK referencing
+  CONSTRAINT "FK_Amenity_Property" FOREIGN KEY ("Property_ID")
+    REFERENCES "Accommodation_Listing" ("Property_ID")
+    ON DELETE CASCADE,
+ 
+  -- Domain Rule: Standardizes Amenity_Name entries
+  CONSTRAINT "CK__Amenity_Name_Standardized" CHECK (
+    "Amenity_Name" IN (
+      'Free Parking',
+      'Breakfast',
+      'Wi-Fi',
+      'TV',
+      'Air Conditioning',
+      'Heating',
+      'Washing Machine',
+      'Kitchen',
+      'Pool',
+      'Pet-Friendly'
+    )
+  )
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- ============================================
 --             6. DEPENDENT ENTITY
@@ -332,83 +540,6 @@ CREATE TABLE "Local_Payout" (
 );
 
 -- ============================================
---  12. ACCOUNT & SECURITY (DEPENDENT) ENTITY
--- ============================================
-
-CREATE TABLE "Verification" (
-  "Verification_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "User_ID" INT NOT NULL, -- FK
-  "Email_Verification_Status" VARCHAR(50) NOT NULL DEFAULT 'Unverified',
-  "Phone_Verification_Status" VARCHAR(50) NOT NULL DEFAULT 'Unverified',
-  "ID_Verification_Status" VARCHAR(50) NOT NULL DEFAULT 'Not Retained',
-
-  -- PK Constraint
-  CONSTRAINT "PK_Verification" PRIMARY KEY ("Verification_ID"),
-
-  -- FK referencing "User" Table's ("User_ID") PK Attribute
-  CONSTRAINT "FK_Verification_User" FOREIGN KEY ("User_ID")
-    REFERENCES "User" ("User_ID")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule: Standardizes auditing/verification status
-  CONSTRAINT "CK_Email_Status_Valid" CHECK (
-    "Email_Verification_Status" IN ('Verified', 'Unverified')
-    ),
-  CONSTRAINT "CK_Phone_Status_Valid" CHECK (
-    "Phone_Verification_Status" IN ('Verified', 'Unverified')
-    ),
-  CONSTRAINT "CK_ID_Status_Valid" CHECK (
-    "ID_Verification_Status" IN ('Verified', 'Not Retained')
-    )
-);
-
--- ============================================
---    13. ACCOUNT & TRUST (DEPENDENT) ENTITY
--- ============================================
-
-CREATE TABLE "Social_Media_Connection" (
-  "SMP_Token" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "User_ID" INT NOT NULL, -- Points to user's own User_ID, FK
-  "Connection_ID" INT NOT NULL, -- Points to user's Social Media Platform (SMP) Connection's User_ID, FK
-
-  -- PK Constraint
-  CONSTRAINT "PK_Social_Media_Connection" PRIMARY KEY ("SMP_Token"),
-
-  -- FK referencing "User" Table's ("User_ID") PK Attribute, for the Source (Original) User connecting
-  CONSTRAINT "FK_SMP_Source_User" FOREIGN KEY ("User_ID")
-    REFERENCES "User" ("User_ID")
-    ON DELETE CASCADE,
-  -- FK referencing "User" Table's ("User_ID") PK Attribute, for the Target Peer (the User's Connection)
-  CONSTRAINT "FK_SMP_Target_Peer" FOREIGN KEY ("Connection_ID")
-    REFERENCES "User" ("User_ID")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule (Structural): Users cannot connect/link with their own account (recursively)
-  CONSTRAINT "CK_No_Self_Connection" CHECK ("User_ID" <> "Connection_ID") -- This Inequality Operator ( <> ) is a Self-Loop Blocking CHECK Constraint
-);
-
--- ============================================
--- 14. ACCOUNT & INTEGRATION (DEPENDENT) ENTITY
--- ============================================
-
-CREATE TABLE "Payment_Method" (
-  "Payment_Method_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "User_ID" INT NOT NULL, -- FK
-  "Payment_Option" VARCHAR(50) NOT NULL DEFAULT 'Credit Card', -- e.g., Credit Card or PayPal, also a new attribute
-  "Encrypted_Payment_Token" VARCHAR(512) NOT NULL, -- For payment security, also new attribute
-  "Billing_Address" VARCHAR(255), -- new attribute 
-  "Default_Payment_Option" BOOLEAN NOT NULL DEFAULT FALSE, -- new attribute
-  
-  -- PK Constraint
-  CONSTRAINT "PK_Payment_Method" PRIMARY KEY ("Payment_Method_ID"),
-
-  -- FK referencing "User" Table's ("User_ID") PK Attribute
-  CONSTRAINT "FK_Payment_Method_User" FOREIGN KEY ("User_ID")
-    REFERENCES "User" ("User_ID")
-    ON DELETE CASCADE
-);
-
--- ============================================
 --    15.  COMMUNICATION (DEPENDENT) ENTITY
 -- ============================================
 
@@ -506,41 +637,6 @@ CREATE TABLE "Notifications" (
   CONSTRAINT "FK_Notifications_Exp_Booking" FOREIGN KEY ("Experience_Booking_ID")
     REFERENCES "Experience_Booking" ("Experience_Booking_ID")
     ON DELETE CASCADE
-);
-
--- ============================================
---     18.  DISCOVERY (DEPENDENT) ENTITY
--- ============================================
-
-CREATE TABLE "Amenity" (
-  "Amenity_ID" INT GENERATED ALWAYS AS IDENTITY, -- PK
-  "Property_ID" INT NOT NULL, -- FK links to Accommodation_Listing Entity/Table
-  "Amenity_Name" VARCHAR(50) NOT NULL, -- e.g., 'Wi-Fi', 'Pool', 'Kitchen', also a new attribute
-  "Amenity_Description" TEXT, -- new attribute
-
-  -- PK Constraint
-  CONSTRAINT "PK_Amenity" PRIMARY KEY ("Amenity_ID"),
-
-  -- FK referencing
-  CONSTRAINT "FK_Amenity_Property" FOREIGN KEY ("Property_ID")
-    REFERENCES "Accommodation_Listing" ("Property_ID")
-    ON DELETE CASCADE,
- 
-  -- Domain Rule: Standardizes Amenity_Name entries
-  CONSTRAINT "CK__Amenity_Name_Standardized" CHECK (
-    "Amenity_Name" IN (
-      'Free Parking',
-      'Breakfast',
-      'Wi-Fi',
-      'TV',
-      'Air Conditioning',
-      'Heating',
-      'Washing Machine',
-      'Kitchen',
-      'Pool',
-      'Pet-Friendly'
-    )
-  )
 );
 
 -- ====================================================
