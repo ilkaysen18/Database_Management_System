@@ -19,7 +19,7 @@
    - Select the free plan tier.
 3. Click to Start a New Project:
 
-   <img width="136" height="26" alt="image" src="https://github.com/user-attachments/assets/6964e5d7-f119-41dd-8d0a-fcd9623010a3" />   →   <img width="102" height="26" alt="image" src="https://github.com/user-attachments/assets/138a2f9e-34fa-46bb-9846-6c49d012de3f" />
+   <img width="136" height="26" alt="image" src="https://github.com/user-attachments/assets/6964e5d7-f119-41dd-8d0a-fcd9623010a3" />   →   <img width="112" height="26" alt="image" src="https://github.com/user-attachments/assets/138a2f9e-34fa-46bb-9846-6c49d012de3f" />
 
    ↓
 
@@ -28,7 +28,7 @@
 
 5. Go to SQL Editor by selecting it from the left Menu:
 
-   <img width="162" height="26" alt="image" src="https://github.com/user-attachments/assets/4b95e683-3567-437d-896b-6f63938d926a" />
+   <img width="172" height="26" alt="image" src="https://github.com/user-attachments/assets/4b95e683-3567-437d-896b-6f63938d926a" />
 
 7. Open a New Query. It will look like this:
 
