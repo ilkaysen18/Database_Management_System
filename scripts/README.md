@@ -2,17 +2,17 @@
 
 # 01_schema.sql
 
-### ERM to PostgreSQL
+### ERM to PostgreSQL:
 * ERM Entity became database table ( CREATE TABLE table_name )
 * ERM Attribute became database entry/column
 * Data Dictionary Entry lists PostgreSQL Data Type ( INT, VARCHAR(200), DATETIME, DECIMAL )
 * Data Keys (PK, FK) became relational constraints (PRIMARY KEY, _references_ parent_table(column) )
 
-### Strategy
+### Strategy:
 * First added the independent entity tables ( e.g. User )
 * Next added the dependent ones ( e.g. Accommodation_Listing )
 
-### SQL Statements
+### SQL Statements:
 ###### They generally follow this structure:
 <img width="317" height="377" alt="image" src="https://github.com/user-attachments/assets/eabdd12c-9f82-417e-b272-5c09542f1435" />
 
@@ -20,7 +20,7 @@
 
 # 01_schema.sql
 
-### PostgreSQL Constraints
+### PostgreSQL Constraints:
 
 ###### Constraints:
 * NOT NULL forces database reject NULL entries ( Password_Hash NOT NULL )
@@ -53,12 +53,12 @@
 
 # 02_dummy_data.sql
 
-### Strategy
+### Strategy:
 * Data Manipulation Language (DML) code for the 20 records of dummy data
 * Begins with base (dependent) entities (e.g. User Table) first
 
-### SQL Statements
-###### They will generally follow this structure:
+### SQL Statements:
+###### They generally follow this structure:
 <img width="632" height="27" alt="image" src="https://github.com/user-attachments/assets/a9ea55f5-5577-4667-900d-eeceb8731037" />
 
 * with the data records right below it
