@@ -2,11 +2,11 @@
 
 ## 03_test_cases.sql
 
-### Strategy
+###### Strategy:
 * Include 1-3 queries for Test Cases
 
-### SQL Statements
-###### To mostly use the following syntax:
+###### SQL Statements:
+###### _To mostly use the following syntax:_
 * SELECT
   - AS
   - FROM
@@ -17,7 +17,7 @@
   - ASC
   - DESC
 * ROUND
-###### Aliasing:
+###### _Aliasing:_
 * FROM "Financial_Transaction" ft 
 
 -----------------------------------------------------------------------------------------------------------------------------------
