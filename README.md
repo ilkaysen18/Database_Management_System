@@ -50,7 +50,7 @@
 
   <img width="160" height="26" alt="image" src="https://github.com/user-attachments/assets/645b88a7-1b29-4954-9607-158a02624aa1" /> 
 
-  - Select table names to view them.
+  - Select table names to view the (currently empty) tables.
 
 **7.** Now that the Tables are complete, do the same for the **Dummy Data**:
   - Go to SQL Editor by selecting it from the left Menu.
