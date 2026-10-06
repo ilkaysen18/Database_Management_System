@@ -26,10 +26,14 @@
    <img width="542" height="195" alt="image" src="https://github.com/user-attachments/assets/aa3b33c5-d13e-48e8-b831-7917fe55c334" />
 
 5. Go to SQL Editor by selecting it from the left Menu:
+
    <img width="235" height="36" alt="image" src="https://github.com/user-attachments/assets/4b95e683-3567-437d-896b-6f63938d926a" />
-6. Open a New Query. It will look like this:
-   <img width="1527" height="817" alt="image" src="https://github.com/user-attachments/assets/9c4e46b6-6ce1-4f25-96a2-c12f37a9904c" />
-7. Directly copy and paste the _01_schema.sql_ file from this GitHub Repository onto that New Query on Supabase.
-8. 
+
+7. Open a New Query. It will look like this:
+
+   <img width="1027" height="617" alt="image" src="https://github.com/user-attachments/assets/9c4e46b6-6ce1-4f25-96a2-c12f37a9904c" />
+
+9. Directly copy and paste the _01_schema.sql_ file from this GitHub Repository onto that New Query on Supabase.
+10. 
 
 --------------------------------------------------------------------------------------------------
