@@ -23,7 +23,7 @@
 
    <img width="142" height="37" alt="image" src="https://github.com/user-attachments/assets/138a2f9e-34fa-46bb-9846-6c49d012de3f" />
 
-   <img width="952" height="295" alt="image" src="https://github.com/user-attachments/assets/aa3b33c5-d13e-48e8-b831-7917fe55c334" />
+   <img width="452" height="195" alt="image" src="https://github.com/user-attachments/assets/aa3b33c5-d13e-48e8-b831-7917fe55c334" />
 
 5. Go to SQL Editor by selecting it from the left Menu:
    <img width="235" height="36" alt="image" src="https://github.com/user-attachments/assets/4b95e683-3567-437d-896b-6f63938d926a" />
