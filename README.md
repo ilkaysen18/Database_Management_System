@@ -58,7 +58,7 @@
   - Directly copy and paste the [_02_dummy_data.sql_](scripts/02_dummy_data.sql) file from this GitHub Repo onto that New Query on Supabase.
   - Save and Click Run to execute query.
   - Once successful, go to Table Editor by selecting it from the left Menu.
-  - Select table names to view the dummy data records.
+  - Select table names to view the mock data records.
 
 **8.** Now that the Dummy Data is complete, do the same for the Test Cases and Metadata:
 
