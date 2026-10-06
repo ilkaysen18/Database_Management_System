@@ -40,10 +40,16 @@
 **5.** Directly copy and paste the _01_schema.sql_ file from this GitHub Repository onto that New Query on Supabase.
    - Save and Click Run to execute query.
 
-**6**. Once successful, go to Table Editor by selecting it from the left Menu:
+**6.** Once successful, go to Table Editor by selecting it from the left Menu:
 
-    <img width="237" height="37" alt="image" src="https://github.com/user-attachments/assets/645b88a7-1b29-4954-9607-158a02624aa1" />
+
+    <img width="237" height="37" alt="image" src="https://github.com/user-attachments/assets/645b88a7-1b29-4954-9607-158a02624aa1" /> 
+
 
     - Select tables to view them.
+
+**7.** Ipsum Lorem.
+
+**8.** Lorem Ipsum.
 
 --------------------------------------------------------------------------------------------------
