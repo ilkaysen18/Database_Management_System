@@ -67,7 +67,7 @@
   - Open a New Query.
   - Directly copy and paste the [_03_security_verification.sql_](queries/test_cases/03_security_verification.sql) file from this GitHub Repo onto that New Query on Supabase.
   - Save and Click Run to execute query.
-  - Once successful, the table will be displayed below the query in Results.
+  - Once successful, the test case will be displayed below the query in Results.
 
 **Metadata**:
 
@@ -75,18 +75,18 @@
   - Open a New Query.
   - Directly copy and paste the [_04_total_tables.sql_](queries/metadata/04_total_tables.sql) file from this GitHub Repo onto that New Query on Supabase.
   - Save and Click Run to execute query.
-  - Once successful, the table will be displayed below the query in Results.
+  - Once successful, the metadata will be displayed below the query in Results.
 
 **Metadata-B:**
   - Open a New Query.
   - Directly copy and paste the [_05_total_entries.sql_](queries/metadata/05_total_entries.sql) file from this GitHub Repo onto that New Query on Supabase.
   - Save and Click Run to execute query.
-  - Once successful, the table will be displayed below the query in Results.
+  - Once successful, the metadata for total entries will be displayed below the query in Results.
 
 **Metadata-C:**
   - Open a New Query.
   - Directly copy and paste the [_06_db_volume.sql_](queries/metadata/06_db_volume.sql) file from this GitHub Repo onto that New Query on Supabase.
   - Save and Click Run to execute query.
-  - Once successful, the table will be displayed below the query in Results.
+  - Once successful, the database volume metadata will be displayed below the query in Results.
 
 --------------------------------------------------------------------------------------------------
