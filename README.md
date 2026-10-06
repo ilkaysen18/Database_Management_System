@@ -31,7 +31,7 @@
 
 7. Open a New Query. It will look like this:
 
-   <img width="627" height="217" alt="image" src="https://github.com/user-attachments/assets/9c4e46b6-6ce1-4f25-96a2-c12f37a9904c" />
+   <img width="827" height="417" alt="image" src="https://github.com/user-attachments/assets/9c4e46b6-6ce1-4f25-96a2-c12f37a9904c" />
 
 9. Directly copy and paste the _01_schema.sql_ file from this GitHub Repository onto that New Query on Supabase.
 10. 
