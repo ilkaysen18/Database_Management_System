@@ -28,7 +28,7 @@
 
 5. Go to SQL Editor by selecting it from the left Menu:
 
-   <img width="142" height="26" alt="image" src="https://github.com/user-attachments/assets/4b95e683-3567-437d-896b-6f63938d926a" />
+   <img width="152" height="26" alt="image" src="https://github.com/user-attachments/assets/4b95e683-3567-437d-896b-6f63938d926a" />
 
 7. Open a New Query. It will look like this:
 
