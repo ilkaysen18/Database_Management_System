@@ -1,8 +1,7 @@
 
 --------------------------------------------------------------------------------------------------
 
-###### Database_Management_System:
-[DBMS](https://github.com/ilkaysen18/Database_Management_System)
+###### Database_Management_System: [DBMS](https://github.com/ilkaysen18/Database_Management_System)
 
 --------------------------------------------------------------------------------------------------
 
