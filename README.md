@@ -37,7 +37,7 @@
   <img width="802" height="405" alt="image" src="https://github.com/user-attachments/assets/2356574a-20bb-4756-8f98-a0faef9a2db8" />
 
 
-**5.** Directly copy and paste the _01_schema.sql_ file from this GitHub Repository onto that New Query on Supabase.
+**5.** Directly copy and paste the _01_schema.sql_ file from this GitHub Repository (Repo) onto that New Query on Supabase.
   - Save and Click Run to execute query. (Can select Run without RLS).
 
 **6.** Once successful, go to Table Editor by selecting it from the left Menu:
@@ -46,7 +46,11 @@
 
   - Select tables to view them.
 
-**7.** Ipsum Lorem.
+**7.** Now that the Tables are complete, do the same for the Dummy Data:
+  - Go to SQL Editor by selecting it from the left Menu.
+  - Open a New Query.
+  - Directly copy and paste the _02_dummy_data.sql_ file from this GitHub Repo onto that New Query on Supabase.
+  - Save and Click Run to execute query. (Can select Run without RLS).
 
 **8.** Lorem Ipsum.
 
