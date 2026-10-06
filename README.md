@@ -17,7 +17,7 @@
 ### Installation and Run Instructions:
 
 **1.** Go to Supabase at [https://supabase.com](https://supabase.com) and either login or create a new account.
-       - Select the free plan tier.
+  - Select the free plan/tier.
 
 **2.** Click to Start a New Project:
 
@@ -34,17 +34,17 @@
 
 **4.** Open a New Query. It will look like this:
 
-       <img width="802" height="405" alt="image" src="https://github.com/user-attachments/assets/2356574a-20bb-4756-8f98-a0faef9a2db8" />
+  <img width="802" height="405" alt="image" src="https://github.com/user-attachments/assets/2356574a-20bb-4756-8f98-a0faef9a2db8" />
 
 
 **5.** Directly copy and paste the _01_schema.sql_ file from this GitHub Repository onto that New Query on Supabase.
-       - Save and Click Run to execute query.
+  - Save and Click Run to execute query.
 
 **6.** Once successful, go to Table Editor by selecting it from the left Menu:
 
-       <img width="237" height="37" alt="image" src="https://github.com/user-attachments/assets/645b88a7-1b29-4954-9607-158a02624aa1" /> 
+  <img width="237" height="37" alt="image" src="https://github.com/user-attachments/assets/645b88a7-1b29-4954-9607-158a02624aa1" /> 
 
-       - Select tables to view them.
+  - Select tables to view them.
 
 **7.** Ipsum Lorem.
 
