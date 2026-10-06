@@ -15,7 +15,7 @@
 --------------------------------------------------------------------------------------------------
 
 ### Installation and Run Instructions:
-1. Ipsum Lorem
+1. Go to Supabase at [https://supabase.com](https://supabase.com) and either login or create a new account.
 2. Lorem Ipsum
 3. Lorem Ipsum
 4. Ipsum Lorem
