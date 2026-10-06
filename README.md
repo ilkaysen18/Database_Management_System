@@ -21,7 +21,7 @@
 
 **2.** Click to Start a New Project:
 
-      <img width="136" height="26" alt="image" src="https://github.com/user-attachments/assets/6964e5d7-f119-41dd-8d0a-fcd9623010a3" />   →   <img width="104" height="26" alt="image" src="https://github.com/user-attachments/assets/138a2f9e-34fa-46bb-9846-6c49d012de3f" />
+  <img width="136" height="26" alt="image" src="https://github.com/user-attachments/assets/6964e5d7-f119-41dd-8d0a-fcd9623010a3" />   →   <img width="104" height="26" alt="image" src="https://github.com/user-attachments/assets/138a2f9e-34fa-46bb-9846-6c49d012de3f" />
 
        ↓
 
