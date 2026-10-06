@@ -6,6 +6,7 @@
 --------------------------------------------------------------------------------------------------
 
 ### Navigation:
+###### _In Order of Runtime on Supabase:_
 * For the Tables (SQL Statements), see: [01_schema.sql](scripts/01_schema.sql)
 * For the Dummy Data, see: [02_dummy_data.sql](scripts/02_dummy_data.sql)
 * For the Test Cases, see: [03_security_verification.sql](queries/test_cases/03_security_verification.sql)
