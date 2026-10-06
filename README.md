@@ -13,7 +13,7 @@
   - [04_total_tables.sql](queries/metadata/04_total_tables.sql)
   - [05_total_entries.sql](queries/metadata/05_total_entries.sql)
   - [06_db_volume.sql](queries/metadata/06_db_volume.sql)
-  - _Note:_ Metadata was added in Phase 3 (P3).
+  - ###### _Note:_ Metadata was added in Phase 3 (P3).
 
 --------------------------------------------------------------------------------------------------
 
