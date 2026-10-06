@@ -7,9 +7,9 @@
 --------------------------------------------------------------------------------------------------
 
 ### Navigation:
-* For SQL Statements, see: [01_schema.sql](Development_P2/scripts/01_schema.sql)
-* For Dummy Data, see: [02_dummy_data.sql](Development_P2/scripts/02_dummy_data.sql)
-* For Test Cases and Metadata, see: [03_queries.sql](Development_P2/test_cases/03_queries.sql)
+* For the Tables (SQL Statements), see: [01_schema.sql](Development_P2/scripts/01_schema.sql)
+* For the Dummy Data, see: [02_dummy_data.sql](Development_P2/scripts/02_dummy_data.sql)
+* For the Test Cases and Metadata, see: [03_queries.sql](Development_P2/test_cases/03_queries.sql)
   - _Note:_ Metadata was added in Phase 3 (P3).
 
 --------------------------------------------------------------------------------------------------
@@ -38,20 +38,26 @@
 
 
 **5.** Directly copy and paste the _01_schema.sql_ file from this GitHub Repository (Repo) onto that New Query on Supabase.
-  - Save and Click Run to execute query. (Can select Run without RLS).
+  - Save and Click Run to execute query. (Can select Run without RLS). (Can also rename the query by locating it from the left SQL Editor queries list > right-click > then Rename Query).
 
 **6.** Once successful, go to Table Editor by selecting it from the left Menu:
 
   <img width="160" height="26" alt="image" src="https://github.com/user-attachments/assets/645b88a7-1b29-4954-9607-158a02624aa1" /> 
 
-  - Select tables to view them.
+  - Select table names to view them.
 
 **7.** Now that the Tables are complete, do the same for the Dummy Data:
   - Go to SQL Editor by selecting it from the left Menu.
   - Open a New Query.
   - Directly copy and paste the _02_dummy_data.sql_ file from this GitHub Repo onto that New Query on Supabase.
-  - Save and Click Run to execute query. (Can select Run without RLS).
+  - Save and Click Run to execute query. (Can select Run without RLS). 
+  - Once successful, go to Table Editor by selecting it from the left Menu.
+  - Select table names to view them.
 
-**8.** Lorem Ipsum.
+**8.** Now that the Dummy Data is complete, do the same for the Test Cases and Metadata:
+  - Go to SQL Editor by selecting it from the left Menu.
+  - Open a New Query.
+  - Directly copy and paste the _03_queries.sql_ file from this GitHub Repo onto that New Query on Supabase.
+  - Save and Click Run to execute query. (Can select Run without RLS).
 
 --------------------------------------------------------------------------------------------------
