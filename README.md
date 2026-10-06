@@ -52,7 +52,7 @@
   - Go to SQL Editor by selecting it from the left Menu.
   - Open a New Query.
   - Directly copy and paste the _02_dummy_data.sql_ file from this GitHub Repo onto that New Query on Supabase.
-  - Save and Click Run to execute query. (Can select Run without RLS). 
+  - Save and Click Run to execute query.
   - Once successful, go to Table Editor by selecting it from the left Menu.
   - Select table names to view them.
 
@@ -60,6 +60,7 @@
   - Go to SQL Editor by selecting it from the left Menu.
   - Open a New Query.
   - Directly copy and paste the _03_queries.sql_ file from this GitHub Repo onto that New Query on Supabase.
-  - Save and Click Run to execute query. (Can select Run without RLS).
+  - Save and Click Run to execute query.
+  - Once successful, the tables will be displayed below the query in Results:
 
 --------------------------------------------------------------------------------------------------
