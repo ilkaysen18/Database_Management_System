@@ -18,7 +18,7 @@
 
 --------------------------------------------------------------------------------------------------
 
-## Installation and Run Instructions:
+# Installation and Run Instructions:
 
 **1.** Go to Supabase at [https://supabase.com](https://supabase.com) and either login or create a new account.
   - Select the free plan/tier.
