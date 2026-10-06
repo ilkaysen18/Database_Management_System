@@ -23,14 +23,14 @@
 
   <img width="136" height="26" alt="image" src="https://github.com/user-attachments/assets/6964e5d7-f119-41dd-8d0a-fcd9623010a3" />   →   <img width="104" height="26" alt="image" src="https://github.com/user-attachments/assets/138a2f9e-34fa-46bb-9846-6c49d012de3f" />
 
-       ↓
+  ↓
 
-       <img width="542" height="195" alt="image" src="https://github.com/user-attachments/assets/aa3b33c5-d13e-48e8-b831-7917fe55c334" />
+  <img width="542" height="195" alt="image" src="https://github.com/user-attachments/assets/aa3b33c5-d13e-48e8-b831-7917fe55c334" />
 
 
 **3.** Go to SQL Editor by selecting it from the left Menu:
 
-       <img width="172" height="26" alt="image" src="https://github.com/user-attachments/assets/4b95e683-3567-437d-896b-6f63938d926a" />
+  <img width="172" height="26" alt="image" src="https://github.com/user-attachments/assets/4b95e683-3567-437d-896b-6f63938d926a" />
 
 **4.** Open a New Query. It will look like this:
 
