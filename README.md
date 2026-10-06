@@ -16,8 +16,16 @@
 
 ### Installation and Run Instructions:
 1. Go to Supabase at [https://supabase.com](https://supabase.com) and either login or create a new account.
-2. Lorem Ipsum
-3. Lorem Ipsum
-4. Ipsum Lorem
+   - Select the free plan tier.
+3. Click to Start a New Project:
+   <img width="246" height="46" alt="image" src="https://github.com/user-attachments/assets/6964e5d7-f119-41dd-8d0a-fcd9623010a3" />
+   <img width="142" height="37" alt="image" src="https://github.com/user-attachments/assets/138a2f9e-34fa-46bb-9846-6c49d012de3f" />
+   <img width="1052" height="395" alt="image" src="https://github.com/user-attachments/assets/aa3b33c5-d13e-48e8-b831-7917fe55c334" />
+4. Go to SQL Editor by selecting it from the left Menu:
+   <img width="235" height="36" alt="image" src="https://github.com/user-attachments/assets/4b95e683-3567-437d-896b-6f63938d926a" />
+6. Open a New Query. It will look like this:
+   <img width="1527" height="817" alt="image" src="https://github.com/user-attachments/assets/9c4e46b6-6ce1-4f25-96a2-c12f37a9904c" />
+7. Directly copy and paste the _01_schema.sql_ file from this GitHub Repository onto that New Query on Supabase.
+8. 
 
 --------------------------------------------------------------------------------------------------
