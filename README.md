@@ -42,7 +42,7 @@
 
 **6.** Once successful, go to Table Editor by selecting it from the left Menu:
 
-  <img width="137" height="26" alt="image" src="https://github.com/user-attachments/assets/645b88a7-1b29-4954-9607-158a02624aa1" /> 
+  <img width="156" height="26" alt="image" src="https://github.com/user-attachments/assets/645b88a7-1b29-4954-9607-158a02624aa1" /> 
 
   - Select tables to view them.
 
