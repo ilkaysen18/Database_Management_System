@@ -7,9 +7,13 @@
 --------------------------------------------------------------------------------------------------
 
 ### Navigation:
-* For the Tables (SQL Statements), see: [01_schema.sql](Development_P2/scripts/01_schema.sql)
-* For the Dummy Data, see: [02_dummy_data.sql](Development_P2/scripts/02_dummy_data.sql)
-* For the Test Cases and Metadata, see: [03_queries.sql](Development_P2/test_cases/03_queries.sql)
+* For the Tables (SQL Statements), see: [01_schema.sql](scripts/01_schema.sql)
+* For the Dummy Data, see: [02_dummy_data.sql](scripts/02_dummy_data.sql)
+* For the Test Cases, see: [03_security_verification.sql](queries/test_cases/03_security_verification.sql)
+* For Database Metadata, see:
+  - [04_total_tables.sql](queries/metadata/04_total_tables.sql)
+  - [05_total_entries.sql](queries/metadata/05_total_entries.sql)
+  - [06_db_volume.sql](queries/metadata/06_db_volume.sql)
   - _Note:_ Metadata was added in Phase 3 (P3).
 
 --------------------------------------------------------------------------------------------------
