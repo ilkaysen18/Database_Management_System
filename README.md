@@ -41,7 +41,7 @@
   <img width="802" height="405" alt="image" src="https://github.com/user-attachments/assets/2356574a-20bb-4756-8f98-a0faef9a2db8" />
 
 
-**5.** For the **Tables**, directly copy and paste the [_01_schema.sql_](scripts/01_schema.sql) file from this GitHub Repository (Repo) onto that New Query on Supabase.
+**5.** Directly copy and paste the [_01_schema.sql_](scripts/01_schema.sql) file from this GitHub Repository (Repo) onto that New Query on Supabase - to achieve the **Tables/Schema:** 
   - Save and Click Run to execute query.
     - (Can select Run without RLS).
     - (Can also rename the query by locating it from the left SQL Editor queries list > right-click > then Rename Query).
@@ -52,7 +52,7 @@
 
   - Select table names to view the (currently empty) tables.
 
-**7.** Now that the Tables are complete, do the same for the **Dummy Data**:
+**7.** Now that the Tables are complete, do the same for the **Dummy Data:** 
   - Go to SQL Editor by selecting it from the left Menu.
   - Open a New Query.
   - Directly copy and paste the [_02_dummy_data.sql_](scripts/02_dummy_data.sql) file from this GitHub Repo onto that New Query on Supabase.
@@ -62,28 +62,28 @@
 
 **8.** Now that the Dummy Data is complete, do the same for the Test Cases and Metadata:
 
-**Test Cases**:
+**Test Cases:** 
   - Go to SQL Editor by selecting it from the left Menu.
   - Open a New Query.
   - Directly copy and paste the [_03_security_verification.sql_](queries/test_cases/03_security_verification.sql) file from this GitHub Repo onto that New Query on Supabase.
   - Save and Click Run to execute query.
   - Once successful, the test case will be displayed below the query in Results.
 
-**Metadata**:
+**Metadata:** 
 
-**Metadata-A:**
+**Metadata-A:** 
   - Open a New Query.
   - Directly copy and paste the [_04_total_tables.sql_](queries/metadata/04_total_tables.sql) file from this GitHub Repo onto that New Query on Supabase.
   - Save and Click Run to execute query.
   - Once successful, the relevant metadata will be displayed below the query in Results.
 
-**Metadata-B:**
+**Metadata-B:** 
   - Open a New Query.
   - Directly copy and paste the [_05_total_entries.sql_](queries/metadata/05_total_entries.sql) file from this GitHub Repo onto that New Query on Supabase.
   - Save and Click Run to execute query.
   - Once successful, the metadata table will be displayed below the query in Results.
 
-**Metadata-C:**
+**Metadata-C:** 
   - Open a New Query.
   - Directly copy and paste the [_06_db_volume.sql_](queries/metadata/06_db_volume.sql) file from this GitHub Repo onto that New Query on Supabase.
   - Save and Click Run to execute query.
