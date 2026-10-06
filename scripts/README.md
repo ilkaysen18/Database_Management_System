@@ -9,8 +9,8 @@
 * Data Keys (PK, FK) become relational constraints (PRIMARY KEY, _references_ parent_table(column) )
 
 ### Strategy
-* First add the independent entity tables ( e.g. User )
-* Next add the dependent ones ( e.g. Accommodation_Listing )
+* First added the independent entity tables ( e.g. User )
+* Next added the dependent ones ( e.g. Accommodation_Listing )
 
 ### SQL Statements
 ###### They will generally follow this structure:
