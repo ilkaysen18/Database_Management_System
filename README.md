@@ -38,7 +38,7 @@
 
 
 **5.** Directly copy and paste the _01_schema.sql_ file from this GitHub Repository onto that New Query on Supabase.
-  - Save and Click Run to execute query.
+  - Save and Click Run to execute query. (Can select Run without RLS).
 
 **6.** Once successful, go to Table Editor by selecting it from the left Menu:
 
