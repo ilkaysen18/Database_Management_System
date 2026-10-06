@@ -31,3 +31,8 @@ WHERE
   v."Email_Verification_Status" = 'Verified'
 ORDER BY
   pm."Default_Payment_Option" DESC, u."User_Name" ASC;
+
+
+-- ===========================================================
+--                       END OF QUERY 1
+-- ===========================================================
